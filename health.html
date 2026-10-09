@@ -4229,7 +4229,8 @@ function renderStatus() {
   const habits = habitsOnTrack();
   const hCol = habits >= 4 ? 'var(--green)' : habits >= 2 ? 'var(--amber)' : 'var(--red)';
   const mt = moodTrend();
-  const streak = (document.getElementById('streakNum') || {}).textContent || '0';
+  const td = (load()[dayKey()] || {}).checks || {};
+  const coreDone = CORE_IDS.filter(function(id) { return td[id]; }).length;
   function tile(label, val, col, sub, tab) {
     return '<div class="st-tile" onclick="showTab(\'' + tab + '\', document.querySelectorAll(\'.tab-btn\')[' + ({ weight: 2, dash: 4, mind: 1, today: 0 })[tab] + '])">' +
       '<div class="st-val" style="color:' + col + '">' + val + '</div><div class="st-lbl">' + label + '</div>' + (sub ? '<div class="st-sub">' + sub + '</div>' : '') + '</div>';
@@ -4238,9 +4239,10 @@ function renderStatus() {
     tile('Zone', zoneTxt, zoneCol, next, 'weight') +
     tile('Habits', habits + '/6', hCol, 'this week', 'dash') +
     tile('Mood', mt.label + mt.arrow, mt.col, '7 days', 'mind') +
-    tile('Streak', streak, 'var(--orange)', 'days', 'today') +
+    tile('Today', coreDone + '/5', coreDone === 5 ? 'var(--green)' : 'var(--orange)', 'must-dos', 'today') +
     '</div>';
   if (zone) html += '<div class="st-plan" style="border-color:' + zoneCol + '"><strong style="color:' + zoneCol + '">' + zoneTxt + ' zone.</strong> ' + ZONE_PLANS[zone] + '</div>';
+  if (mt.label === 'Low') html += '<div class="st-plan" style="border-color:var(--red)"><strong style="color:var(--red)">Mood has been low this week.</strong> Talk to someone today. 1737 is free to call or text, any time.</div>';
   el.innerHTML = html;
 }
 
