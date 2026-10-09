@@ -181,6 +181,7 @@ body::before { display: none; }
 .cl-label { font-size: 13px; font-weight: 600; color: var(--text); }
 .cl-row.cl-done .cl-label { color: var(--green); text-decoration: line-through; opacity: 0.7; }
 .cl-sub { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+.cl-why { font-size: 10px; color: var(--blue); margin-top: 3px; line-height: 1.3; font-style: italic; }
 .cl-tick {
   width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
   border: 2px solid rgba(0,0,0,0.15); background: transparent;
@@ -1040,6 +1041,51 @@ body::before { display: none; }
   white-space: nowrap;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── Health Notes + Mind (Oct 2026) ── */
+.hn-label { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 0.6px; margin: 4px 0 8px; }
+.hn-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 14px; }
+.hn-card .cl-row { margin-bottom: 6px; }
+.hn-tile { background: rgba(0,0,0,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 10px; text-align: center; }
+.hn-green { background: var(--green-dim); border-color: rgba(46,125,82,0.25); }
+.hn-green .hn-tile-t { color: var(--green); }
+.hn-amber { background: var(--amber-dim); border-color: rgba(192,122,32,0.25); }
+.hn-amber .hn-tile-t { color: var(--amber); }
+.hn-tile-t { font-size: 11px; font-weight: 700; margin-top: 3px; }
+.hn-tile-s { font-size: 9px; color: var(--muted); margin-top: 2px; }
+.hn-note { background: var(--orange-dim); border: 1px solid rgba(200,90,26,0.15); border-radius: 8px; padding: 9px 12px; font-size: 11px; color: var(--muted); line-height: 1.55; }
+.hn-small { font-size: 11px; color: var(--muted); line-height: 1.55; margin-top: 8px; }
+.hn-row { padding: 6px 0; border-bottom: 1px solid var(--border); }
+.hn-bars { display: flex; align-items: flex-end; gap: 4px; height: 110px; padding-top: 14px; }
+.hn-bar { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative; }
+.hn-bar > div { width: 100%; background: var(--blue); opacity: 0.75; border-radius: 4px 4px 0 0; }
+.hn-bar span { position: absolute; top: -2px; font-size: 9px; font-weight: 700; color: var(--text); }
+.hn-bar em { font-style: normal; font-size: 8px; color: var(--muted2); margin-top: 3px; white-space: nowrap; }
+.hn-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.hn-table th { text-align: left; font-weight: 600; padding: 5px 0; border-bottom: 1px solid var(--border); }
+.hn-table td { padding: 5px 0 5px 8px; border-bottom: 1px solid var(--border); text-align: right; }
+.hn-table td.ok { color: var(--green); font-size: 11px; }
+.hn-table td.warn { color: var(--amber); font-size: 11px; font-weight: 600; }
+.mind-q { font-size: 12px; font-weight: 700; margin: 4px 0 6px; }
+.mind-scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 12px; }
+.mind-scale button { font-family: inherit; font-size: 16px; font-weight: 800; color: var(--text); background: var(--surface2); border: 2px solid transparent; border-radius: 10px; padding: 8px 0 6px; cursor: pointer; }
+.mind-scale button small { display: block; font-size: 9px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+.mind-scale button.on { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+.sign-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.sign-btn { font-family: inherit; font-size: 12px; padding: 7px 10px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); cursor: pointer; }
+.sign-btn.on { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); font-weight: 700; }
+.urge-step { font-size: 13px; line-height: 1.45; margin-bottom: 8px; display: flex; gap: 8px; }
+.urge-step b { flex-shrink: 0; width: 18px; height: 18px; border-radius: 9px; background: var(--orange); color: #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.plan-details > summary { font-size: 13px; font-weight: 700; color: var(--muted); padding: 10px 2px 14px; cursor: pointer; }
+.hb-row { display: grid; grid-template-columns: 24px 1fr 52px; gap: 8px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.hb-dot { width: 14px; height: 14px; border-radius: 7px; }
+.hb-name { font-size: 13px; font-weight: 700; }
+.hb-sub { font-size: 11px; color: var(--muted); margin-top: 1px; line-height: 1.35; }
+.hb-val { text-align: right; font-size: 14px; font-weight: 800; }
+.mind-input { width: 100%; font-family: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); }
+.mind-grid { display: grid; grid-template-columns: 52px repeat(14, 1fr); gap: 3px; align-items: center; font-size: 9px; color: var(--muted); margin-bottom: 4px; }
+.mind-cell { height: 16px; border-radius: 3px; background: rgba(0,0,0,0.06); }
+.mind-c1 { background: var(--red); } .mind-c2 { background: #e08a5a; } .mind-c3 { background: #d9c27a; } .mind-c4 { background: #7dbb94; } .mind-c5 { background: var(--green); }
 </style>
 </head>
 <body>
@@ -1063,11 +1109,14 @@ body::before { display: none; }
   <button class="tab-btn active" onclick="showTab('today',this)">
     <span class="tab-icon">📊</span>Today
   </button>
+  <button class="tab-btn" onclick="showTab('mind',this)">
+    <span class="tab-icon">🧠</span>Mind
+  </button>
   <button class="tab-btn" onclick="showTab('weight',this)">
     <span class="tab-icon">⚖️</span>Weight
   </button>
   <button class="tab-btn" onclick="showTab('eatplan',this)">
-    <span class="tab-icon">🥗</span>Eat & Menu
+    <span class="tab-icon">🥗</span>Eat
   </button>
   <button class="tab-btn" onclick="showTab('dash',this)">
     <span class="tab-icon">🎯</span>Progress
@@ -1084,111 +1133,107 @@ body::before { display: none; }
 <!-- ── Daily Checklist ── -->
 <div id="todayView" style="padding:0 20px 100px">
 
-  <!-- Title -->
-  <div style="padding:18px 0 14px">
-    <div style="font-size:20px;font-weight:800;color:var(--orange);letter-spacing:-0.3px">Make today count 💪</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:3px" id="checklistSubtitle">Tap each item as you complete it — resets tomorrow.</div>
+  <!-- Title + core progress -->
+  <div style="padding:18px 0 10px">
+    <div style="font-size:20px;font-weight:800;color:var(--orange);letter-spacing:-0.3px">Today's 5</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:3px" id="checklistSubtitle">Do these 5 and the day counts.</div>
   </div>
+  <div class="hn-card" id="streakCard" style="margin-bottom:12px"></div>
 
   <!-- Checklist - static HTML, JS only toggles state -->
   <div id="dailyChecklist">
 
-    <div class="cl-section">MORNING</div>
-
-    <div class="cl-row" id="cl_symbicort" onclick="toggleCheck('symbicort')">
+    <div class="cl-section">MUST DO · these build your streak</div>
+    <div class="cl-row" id="cl_core_meds" onclick="toggleCheck('core_meds')">
       <div class="cl-icon">💊</div>
       <div class="cl-text">
-        <div class="cl-label">Symbicort</div>
-        <div class="cl-sub">Preventer inhaler — first thing, with water</div>
+        <div class="cl-label">Medicines</div>
+        <div class="cl-sub">Symbicort at wake-up. Tamsulosin, finasteride and Celebrex at the same time each day.</div>
+        <div class="cl-why">Keeps your lungs open and stops colds setting you back.</div>
       </div>
-      <div class="cl-tick" id="tick_symbicort"></div>
+      <div class="cl-tick" id="tick_core_meds"></div>
     </div>
-
-    <div class="cl-row" id="cl_powerbreathe_am" onclick="toggleCheck('powerbreathe_am')">
-      <div class="cl-icon">🌬</div>
+    <div class="cl-row" id="cl_core_morning" onclick="toggleCheck('core_morning')">
+      <div class="cl-icon">🌅</div>
       <div class="cl-text">
-        <div class="cl-label">POWERbreathe AM</div>
-        <div class="cl-sub">30 breaths — before breakfast</div>
+        <div class="cl-label">Morning block</div>
+        <div class="cl-sub">Straight after Symbicort: POWERbreathe 30 breaths, 10 min stretch, 31 push-ups, 31 sit-ups, 90s plank. Bad day: 5 min stretch + 10 push-ups still counts.</div>
+        <div class="cl-why">Builds breathing muscles, keeps the hip moving and the muscle that burns calories.</div>
       </div>
-      <div class="cl-tick" id="tick_powerbreathe_am"></div>
+      <div class="cl-tick" id="tick_core_morning"></div>
     </div>
-
-    <div class="cl-row" id="cl_stretch" onclick="toggleCheck('stretch')">
-      <div class="cl-icon">🧘</div>
-      <div class="cl-text">
-        <div class="cl-label">Stretching</div>
-        <div class="cl-sub">12 min — hamstrings, hip flexors, cat-cow</div>
-      </div>
-      <div class="cl-tick" id="tick_stretch"></div>
-    </div>
-
-    <div class="cl-section">DAYTIME</div>
-
-    <div class="cl-row" id="cl_fast_window" onclick="toggleCheck('fast_window')">
+    <div class="cl-row" id="cl_core_eat" onclick="toggleCheck('core_eat')">
       <div class="cl-icon">⏱</div>
       <div class="cl-text">
-        <div class="cl-label">Fast kept to 11am</div>
-        <div class="cl-sub">No food before 11am — water and black coffee only</div>
+        <div class="cl-label">Eating window kept</div>
+        <div class="cl-sub">Nothing before 11am. Kitchen closed after the shift, protein shake only. Tired, bored or lonely? Water, wait 20 min.</div>
+        <div class="cl-why">This is where the weight is won or lost, not the gym.</div>
       </div>
-      <div class="cl-tick" id="tick_fast_window"></div>
+      <div class="cl-tick" id="tick_core_eat"></div>
+    </div>
+    <div class="cl-row" id="cl_core_connect" onclick="toggleCheck('core_connect')">
+      <div class="cl-icon">🤝</div>
+      <div class="cl-text">
+        <div class="cl-label">One real conversation</div>
+        <div class="cl-sub">Ask someone how they really are, and tell them how you are. A text or call counts.</div>
+        <div class="cl-why">Loneliness drives the comfort eating. This is the fix.</div>
+      </div>
+      <div class="cl-tick" id="tick_core_connect"></div>
+    </div>
+    <div class="cl-row" id="cl_core_evening" onclick="toggleCheck('core_evening')">
+      <div class="cl-icon">🌙</div>
+      <div class="cl-text">
+        <div class="cl-label">Evening block</div>
+        <div class="cl-sub">POWERbreathe 30 breaths, brush and floss, then 20 min wind-down with no screens.</div>
+        <div class="cl-why">Your note: when the teeth slip, everything slips. Better sleep means a better tomorrow.</div>
+      </div>
+      <div class="cl-tick" id="tick_core_evening"></div>
+    </div>
+
+    <div class="cl-section">EXTRAS · good, but they don't break the streak</div>
+    <div class="cl-row" id="cl_exercise" onclick="toggleCheck('exercise')">
+      <div class="cl-icon">💪</div>
+      <div class="cl-text">
+        <div class="cl-label">Move today</div>
+        <div class="cl-sub">Circuit, spin, swim, or a 30-min walk on rest days. Weekly targets below.</div>
+      </div>
+      <div class="cl-tick" id="tick_exercise"></div>
+    </div>
+    <div class="cl-row" id="cl_guitar" onclick="toggleCheck('guitar')">
+      <div class="cl-icon">🎸</div>
+      <div class="cl-text">
+        <div class="cl-label">Guitar or a hobby</div>
+        <div class="cl-sub">Even 10 minutes. When this stops, it's an early sign you're not OK.</div>
+      </div>
+      <div class="cl-tick" id="tick_guitar"></div>
     </div>
 
     <div class="cl-row" id="cl_foundation" onclick="toggleCheck('foundation')">
       <div class="cl-icon">🥚</div>
       <div class="cl-text">
         <div class="cl-label">Foundation meal</div>
-        <div class="cl-sub">Eggs, cottage cheese, Vogel's, tomato — 11am</div>
+        <div class="cl-sub">Eggs, cottage cheese, tomato — 11am. 34g protein.</div>
       </div>
       <div class="cl-tick" id="tick_foundation"></div>
     </div>
-
-    <div class="cl-row" id="cl_exercise" onclick="toggleCheck('exercise')">
-      <div class="cl-icon">💪</div>
+    <div class="cl-row" id="cl_mindlog" onclick="showTab('mind', document.querySelectorAll('.tab-btn')[1])">
+      <div class="cl-icon">🧠</div>
       <div class="cl-text">
-        <div class="cl-label">Exercise done</div>
-        <div class="cl-sub">Gym, run, swim, spin, or 31s routine</div>
+        <div class="cl-label">Mind check-in</div>
+        <div class="cl-sub">Mood, energy, sleep — tap to open</div>
       </div>
-      <div class="cl-tick" id="tick_exercise"></div>
+      <div class="cl-tick" id="tick_mindlog"></div>
     </div>
 
-    <div class="cl-section">EVENING</div>
+  </div>
 
-    <div class="cl-row" id="cl_powerbreathe_pm" onclick="toggleCheck('powerbreathe_pm')">
-      <div class="cl-icon">🌬</div>
-      <div class="cl-text">
-        <div class="cl-label">POWERbreathe PM</div>
-        <div class="cl-sub">30 breaths — before bed</div>
-      </div>
-      <div class="cl-tick" id="tick_powerbreathe_pm"></div>
+  <!-- This week -->
+  <div class="hn-card" style="margin-top:16px;margin-bottom:0">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:800">This week</div>
+      <div style="font-size:10px;color:var(--muted)">Mon to Sun · from your exercise log</div>
     </div>
-
-    <div class="cl-row" id="cl_kitchen" onclick="toggleCheck('kitchen')">
-      <div class="cl-icon">🍽</div>
-      <div class="cl-text">
-        <div class="cl-label">Kitchen closed</div>
-        <div class="cl-sub">Nothing after 6pm — protein shake only if needed</div>
-      </div>
-      <div class="cl-tick" id="tick_kitchen"></div>
-    </div>
-
-    <div class="cl-row" id="cl_brush" onclick="toggleCheck('brush')">
-      <div class="cl-icon">🪥</div>
-      <div class="cl-text">
-        <div class="cl-label">Brush teeth</div>
-        <div class="cl-sub">Non-negotiable — when this slips, everything slips</div>
-      </div>
-      <div class="cl-tick" id="tick_brush"></div>
-    </div>
-
-    <div class="cl-row" id="cl_floss" onclick="toggleCheck('floss')">
-      <div class="cl-icon">🦷</div>
-      <div class="cl-text">
-        <div class="cl-label">Floss</div>
-        <div class="cl-sub">Once nightly</div>
-      </div>
-      <div class="cl-tick" id="tick_floss"></div>
-    </div>
-
+    <div id="weekTargets"></div>
   </div>
 
   <!-- Exercise log button -->
@@ -1219,7 +1264,9 @@ body::before { display: none; }
 
     <!-- Goal reminder -->
     <div style="background:var(--orange-dim);border:1px solid rgba(200,90,26,0.2);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:var(--muted);line-height:1.6">
-      <strong style="color:var(--orange)">Target: 73 kg</strong> — weigh every Friday morning, before eating, after bathroom. Consistent conditions matter more than the number. 9.2 kg to lose. At 0.5 kg/week that's about 18 weeks. Weight loss improves lung mechanics, reduces dive risk, and makes everything easier.
+      <strong style="color:var(--orange)">Lose 2, hold 4.</strong> Big pushes haven't stuck, so go in steps: drop 2 kg, then hold that weekly average for 4 weeks before the next step. Holding is a win, not a stall. Each step down becomes your new normal.<br>
+      <strong>Steps:</strong> 80 → 78 → 76 → 74 → 73 kg.<br>
+      <strong>Weigh</strong> most mornings, before eating, after the bathroom. A single reading can swing 1 to 2 kg with water and salt. Only the 7-day average below counts.
     </div>
 
     <!-- Log entry -->
@@ -1260,6 +1307,52 @@ body::before { display: none; }
 <div class="panel-view" id="eatplanView">
 
   <div style="margin-top:16px"></div>
+
+  <!-- When the urge hits -->
+  <div class="hn-card" style="border-color:rgba(200,90,26,0.35)">
+    <div style="font-size:18px;font-weight:800;color:var(--orange)">When the urge hits</div>
+    <div class="hn-small" style="margin-top:2px;margin-bottom:10px">Lose It counts the food. This is for the moment before it.</div>
+    <div class="urge-step"><b>1</b> Drink a full glass of water.</div>
+    <div class="urge-step"><b>2</b> Name the feeling. Am I hungry, or am I:</div>
+    <div class="mind-scale" id="urgeFeel" style="grid-template-columns:repeat(4,1fr);margin-left:26px">
+      <button onclick="pickFeel('tired')">Tired</button>
+      <button onclick="pickFeel('bored')">Bored</button>
+      <button onclick="pickFeel('lonely')">Lonely</button>
+      <button onclick="pickFeel('low')">Low</button>
+    </div>
+    <div class="urge-step"><b>3</b> Do one swap: text someone · 10 min guitar · short walk · shower · go to bed.</div>
+    <div class="urge-step"><b>4</b> Wait 20 minutes. Most urges pass.</div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="modal-save" style="flex:1" onclick="logUrge('passed')">Urge passed</button>
+      <button class="modal-cancel" style="flex:1" onclick="logUrge('ate')">I ate it</button>
+    </div>
+    <div class="hn-small" id="urgeToday"></div>
+  </div>
+
+  <!-- Keep it out of the house -->
+  <div class="hn-card">
+    <div style="font-size:13px;font-weight:800;margin-bottom:6px">Keep it out of the house</div>
+    <div class="hn-small" style="margin-top:0">Ice cream, lollies and chips are easy to say no to in the supermarket and hard at 11pm. Don't buy them.</div>
+    <div style="font-size:12px;font-weight:700;margin:10px 0 4px">When you really want something</div>
+    <div style="font-size:12px;line-height:1.7;color:var(--muted)">Frozen berries with Greek yoghurt · air-popped popcorn · protein shake · sugar-free jelly · an apple with peanut butter · a cup of tea</div>
+  </div>
+
+  <!-- Compact plan -->
+  <div class="hn-card">
+    <div style="font-size:13px;font-weight:800;margin-bottom:6px">Your day of eating</div>
+    <div style="font-size:12px;line-height:1.75">
+      <div><strong>Until 11am</strong> · water or tea only</div>
+      <div><strong>11am</strong> · eggs, cottage cheese, tomato (34g protein)</div>
+      <div><strong>2pm</strong> · cottage cheese + fruit, driving days</div>
+      <div><strong>4pm</strong> · main meal, palm of meat or fish + vegetables</div>
+      <div><strong>On shift</strong> · protein shake in the car, nothing from service stations</div>
+      <div><strong>After shift</strong> · shake only if hungry. Kitchen closed.</div>
+    </div>
+    <div class="hn-note" style="margin-top:10px">Targets: <strong>1,700 kcal · 110 g protein</strong>. Track them in Lose It.</div>
+  </div>
+
+  <details class="plan-details">
+  <summary>Full meal plan with calories</summary>
 
   <div class="info-box">
     <div class="info-box-title">Your daily targets</div>
@@ -1389,6 +1482,39 @@ body::before { display: none; }
     <div class="plan-window-note">Eat this even if you're not very hungry at 2pm. Its job is to reduce the 10pm battle — not to satisfy current hunger.</div>
   </div>
 
+  <!-- Window 4: Main meal 4pm -->
+  <div class="plan-window">
+    <div class="plan-window-header">
+      <div class="plan-window-time">4pm</div>
+      <div class="plan-window-title">Main meal — Lyalle cooks</div>
+      <div class="plan-window-kcal">~700 kcal</div>
+    </div>
+    <div class="plan-window-body">
+      <div class="plan-item">
+        <div class="plan-item-dot" style="background:var(--green)"></div>
+        <div class="plan-item-text">
+          <div class="plan-item-name">Meat or fish (palm-sized portion) + vegetables</div>
+          <div class="plan-item-macro">~35–40g protein · ~400–500 kcal depending on cut</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-item-dot" style="background:var(--green)"></div>
+        <div class="plan-item-text">
+          <div class="plan-item-name">Rice or kumara (half-cup cooked) if included</div>
+          <div class="plan-item-macro">~100–150 kcal · watch portion size</div>
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-item-dot" style="background:var(--red)"></div>
+        <div class="plan-item-text">
+          <div class="plan-item-name">No bread with the meal</div>
+          <div class="plan-item-macro">Bread is a trigger food — keep it off the table entirely</div>
+        </div>
+      </div>
+    </div>
+    <div class="plan-window-note">This is your highest-quality meal. Eat slowly. If you're full, stop — don't finish the plate out of habit.</div>
+  </div>
+
   <!-- Window 3b: In-car during shift -->
   <div class="plan-window">
     <div class="plan-window-header">
@@ -1427,39 +1553,6 @@ body::before { display: none; }
 
     </div>
     <div class="plan-window-note">Drink it when hunger starts building — don't wait until you're starving. That's when bad decisions happen.</div>
-  </div>
-
-  <!-- Window 4: Main meal 4pm -->
-  <div class="plan-window">
-    <div class="plan-window-header">
-      <div class="plan-window-time">4pm</div>
-      <div class="plan-window-title">Main meal — Lyalle cooks</div>
-      <div class="plan-window-kcal">~700 kcal</div>
-    </div>
-    <div class="plan-window-body">
-      <div class="plan-item">
-        <div class="plan-item-dot" style="background:var(--green)"></div>
-        <div class="plan-item-text">
-          <div class="plan-item-name">Meat or fish (palm-sized portion) + vegetables</div>
-          <div class="plan-item-macro">~35–40g protein · ~400–500 kcal depending on cut</div>
-        </div>
-      </div>
-      <div class="plan-item">
-        <div class="plan-item-dot" style="background:var(--green)"></div>
-        <div class="plan-item-text">
-          <div class="plan-item-name">Rice or kumara (half-cup cooked) if included</div>
-          <div class="plan-item-macro">~100–150 kcal · watch portion size</div>
-        </div>
-      </div>
-      <div class="plan-item">
-        <div class="plan-item-dot" style="background:var(--red)"></div>
-        <div class="plan-item-text">
-          <div class="plan-item-name">No bread with the meal</div>
-          <div class="plan-item-macro">Bread is a trigger food — keep it off the table entirely</div>
-        </div>
-      </div>
-    </div>
-    <div class="plan-window-note">This is your highest-quality meal. Eat slowly. If you're full, stop — don't finish the plate out of habit.</div>
   </div>
 
   <!-- Window 5: Post-shift -->
@@ -1504,13 +1597,15 @@ body::before { display: none; }
       <div style="font-size:11px;color:var(--muted2)">Non-driving days: skip 2pm snack and in-car shake → ~1,315 kcal · ~97g protein. Add one extra shake to hit 110g target.</div>
     </div>
   </div>
+  </details>
 
 
 </div>
 
 <!-- ── Progress Dashboard panel ── -->
 <div class="panel-view" id="dashView">
-  <div style="padding-top:16px" id="dashContent"></div>
+  <div style="padding-top:16px" id="habitsDash"></div>
+  <div id="dashContent"></div>
 
   <!-- Lung function — rendered statically, always visible -->
   <div class="plan-window" style="margin:0 0 10px">
@@ -1635,170 +1730,226 @@ body::before { display: none; }
 <div class="panel-view" id="diveView">
   <div style="padding:16px 16px 100px">
 
-    <!-- Last updated notice -->
-    <div style="font-size:10px;color:var(--muted2);text-align:right;margin-bottom:10px">Updated Sep 2026 · Update manually when new results arrive</div>
+    <div style="font-size:10px;color:var(--muted2);text-align:right;margin-bottom:10px">Updated 9 Oct 2026 from your records · Update when new results arrive</div>
+
+    <!-- ══ GP VISIT LIST ══ -->
+    <div class="hn-label">🩺 FOR YOUR GP VISIT · 1 DEC 2026</div>
+    <div class="hn-card" style="border-color:rgba(200,90,26,0.35)">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.5">One $68 visit. These are gaps or questions found in your records. Tap each one off as it is sorted.</div>
+      <div class="cl-row" id="cl_gp_hba1c" onclick="toggleGp('hba1c')"><div class="cl-text"><div class="cl-label">HbA1c blood sugar test</div><div class="cl-sub">Last result on file is 36 (normal) from Mar 2020. Six years old.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_acr" onclick="toggleGp('acr')"><div class="cl-text"><div class="cl-label">Urine albumin (ACR) test</div><div class="cl-sub">Not on file. Completes the kidney picture alongside your eGFR.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_predict" onclick="toggleGp('predict')"><div class="cl-text"><div class="cl-label">Heart risk score (Predict)</div><div class="cl-sub">Not on file. Your lab report says decisions on your LDL 3.3 should be based on this score.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_psa" onclick="toggleGp('psa')"><div class="cl-text"><div class="cl-label">PSA and finasteride</div><div class="cl-sub">Your question: does finasteride change what PSA results mean? Also get your start date recorded.</div></div><div class="cl-tick"></div></div>
+            <div class="cl-row" id="cl_gp_vacc" onclick="toggleGp('vacc')"><div class="cl-text"><div class="cl-label">Vaccines check</div><div class="cl-sub">Shingrix (you had the older Zostavax around 2019), pneumococcal (lung condition, age 72), COVID booster, tetanus.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_symb" onclick="toggleGp('symb')"><div class="cl-text"><div class="cl-label">New Symbicort prescription</div><div class="cl-sub">One repeat left at Chemist Warehouse Riccarton.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_hip" onclick="toggleGp('hip')"><div class="cl-text"><div class="cl-label">Hip and Celebrex</div><div class="cl-sub">Nothing has happened with the ortho referral since Jan. Is Celebrex every day OK long term for your kidneys and blood pressure?</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_bili" onclick="toggleGp('bili')"><div class="cl-text"><div class="cl-label">Bilirubin 24 (slightly high)</div><div class="cl-sub">Rest of liver tests normal. Often harmless (Gilbert's). Worth a one-line check.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_mind" onclick="toggleGp('mind')"><div class="cl-text"><div class="cl-label">Sleep and mood</div><div class="cl-sub">Mention it if your Mind tab shows a run of low days or poor sleep.</div></div><div class="cl-tick"></div></div>
+    </div>
 
     <!-- ══ DIVE READINESS ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">🤿 DIVE READINESS</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
+    <div class="hn-label">🤿 DIVE READINESS</div>
+    <div class="hn-card">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
-        <div style="background:var(--green-dim);border:1px solid rgba(46,125,82,0.25);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;margin-bottom:3px">✅</div>
-          <div style="font-size:11px;font-weight:700;color:var(--green)">Biopsy clear</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">Aug 2026</div>
-        </div>
-        <div style="background:var(--green-dim);border:1px solid rgba(46,125,82,0.25);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;margin-bottom:3px">✅</div>
-          <div style="font-size:11px;font-weight:700;color:var(--green)">Spirometry ↑</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">62% → 70%</div>
-        </div>
-        <div style="background:var(--amber-dim);border:1px solid rgba(192,122,32,0.25);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;margin-bottom:3px">🔄</div>
-          <div style="font-size:11px;font-weight:700;color:var(--amber)">Weight</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">82.2 → 73 kg</div>
-        </div>
-        <div style="background:var(--amber-dim);border:1px solid rgba(192,122,32,0.25);border-radius:10px;padding:10px;text-align:center">
-          <div style="font-size:18px;margin-bottom:3px">🔄</div>
-          <div style="font-size:11px;font-weight:700;color:var(--amber)">IMT training</div>
-          <div style="font-size:9px;color:var(--muted);margin-top:2px">8–12 wks from Sep</div>
-        </div>
-        <div style="background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;grid-column:1/-1">
-          <div style="font-size:18px;margin-bottom:3px">⏳</div>
-          <div style="font-size:11px;font-weight:700;color:var(--muted)">Book dive medical</div>
-          <div style="font-size:9px;color:var(--muted2);margin-top:2px">Dr Tovaranonte · Doctors on Cashel · 03 366 2578</div>
-        </div>
+        <div class="hn-tile hn-green"><div style="font-size:18px">✅</div><div class="hn-tile-t">Biopsy clear</div><div class="hn-tile-s">Aug 2026 · discharged Sep</div></div>
+        <div class="hn-tile hn-green"><div style="font-size:18px">✅</div><div class="hn-tile-t">Spirometry up</div><div class="hn-tile-s">62% → 70% FEV1</div></div>
+        <div class="hn-tile hn-amber"><div style="font-size:18px">🔄</div><div class="hn-tile-t">Weight</div><div class="hn-tile-s">82.2 → 73 kg</div></div>
+        <div class="hn-tile hn-amber"><div style="font-size:18px">🔄</div><div class="hn-tile-t">IMT training</div><div class="hn-tile-s">8–12 wks from 19 Sep</div></div>
+        <div class="hn-tile" style="grid-column:1/-1"><div style="font-size:18px">⏳</div><div class="hn-tile-t" style="color:var(--muted)">Book dive medical</div><div class="hn-tile-s">Dr Tovaranonte · Doctors on Cashel · 03 366 2578</div></div>
       </div>
-      <div style="background:var(--orange-dim);border-radius:8px;padding:9px 12px;font-size:11px;color:var(--muted);line-height:1.5;border:1px solid rgba(200,90,26,0.15)">
-        Bring <strong style="color:var(--orange)">both spirometry reports</strong> to dive medical. The Kaikōura uncontrolled ascent was air trapping from reduced lung function — not technique failure.
-      </div>
+      <div class="hn-note">Bring <strong style="color:var(--orange)">both spirometry reports</strong> (Dec 2025 and Jun 2026). The Kaikōura uncontrolled ascent was air trapping from reduced lung function, not technique failure.<br><strong style="color:var(--orange)">73 kg is your goal, not the dive doctor's.</strong> The medical is mainly about your lungs. A pool refresh at a dive club could come well before you reach 73 kg.</div>
     </div>
 
     <!-- ══ RESPIRATORY ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">🫁 RESPIRATORY</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
-      <!-- FEV1 -->
-      <div style="margin-bottom:12px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
-          <span style="font-size:12px;font-weight:700;color:var(--text)">FEV1 — Spirometry</span>
-          <span style="font-size:20px;font-weight:800;color:var(--green)">70%</span>
-        </div>
-        <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;position:relative;margin-bottom:4px">
-          <div style="position:absolute;left:0;top:0;bottom:0;width:62%;background:var(--amber);border-radius:4px;opacity:0.35"></div>
-          <div style="position:absolute;left:0;top:0;bottom:0;width:70%;background:var(--green);border-radius:4px"></div>
-          <div style="position:absolute;left:80%;top:-1px;bottom:-1px;width:2px;background:var(--green);opacity:0.5"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted2)">
-          <span>Dec 2025: 62%</span><span style="color:var(--green);font-weight:700">Jun 2026: 70%</span><span>Target: 80%+</span>
-        </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5">Mildly obstructive — up from moderately severe. Diagnosis: asthma/COPD overlap.</div>
+    <div class="hn-label">🫁 LUNGS · asthma/COPD overlap</div>
+    <div class="hn-card">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+        <span style="font-size:12px;font-weight:700">FEV1 (before inhaler)</span>
+        <span style="font-size:20px;font-weight:800;color:var(--green)">70%</span>
       </div>
-      <!-- Medications -->
-      <div style="border-top:1px solid var(--border);padding-top:10px;margin-bottom:10px">
-        <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.4px;margin-bottom:6px">MEDICATIONS</div>
-        <div style="display:flex;gap:8px">
-          <div style="flex:1;background:var(--blue-dim);border-radius:8px;padding:8px 10px;border:1px solid rgba(26,111,168,0.2)">
-            <div style="font-size:12px;font-weight:700;color:var(--blue)">Symbicort</div>
-            <div style="font-size:10px;color:var(--muted);margin-top:2px">Preventer — daily at wake-up</div>
-          </div>
-          <div style="flex:1;background:var(--surface2);border-radius:8px;padding:8px 10px;border:1px solid var(--border)">
-            <div style="font-size:12px;font-weight:700;color:var(--text)">Salbutamol</div>
-            <div style="font-size:10px;color:var(--muted);margin-top:2px">Reliever — as needed</div>
-          </div>
-        </div>
+      <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;position:relative;margin-bottom:4px">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:62%;background:var(--amber);border-radius:4px;opacity:0.35"></div>
+        <div style="position:absolute;left:0;top:0;bottom:0;width:70%;background:var(--green);border-radius:4px"></div>
+        <div style="position:absolute;left:80%;top:-1px;bottom:-1px;width:2px;background:var(--green);opacity:0.5"></div>
       </div>
-      <!-- IMT protocol -->
-      <div style="border-top:1px solid var(--border);padding-top:10px">
-        <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.4px;margin-bottom:6px">IMT PROTOCOL — from 19 Sep 2026</div>
-        <div style="font-size:11px;color:var(--muted);line-height:1.6">
-          POWERbreathe · <strong style="color:var(--orange)">30 breaths × 2 daily</strong> · 6 days/week<br>
-          Progressive resistance · gains expected at 8–12 weeks<br>
-          <span style="color:var(--red);font-weight:600">⚠ Respiratory function declines significantly after colds — avoid infection, stay on Symbicort</span>
-        </div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted2)">
+        <span>18 Dec 2025: 62%</span><span style="color:var(--green);font-weight:700">29 Jun 2026: 70%</span><span>Target 80%+</span>
       </div>
+      <div class="hn-small">Mildly obstructive, up from moderately severe. FEV1 1.77 → 1.97 L. After inhaler it reaches 2.32 L, so the airways respond well to treatment.</div>
+      <div class="hn-small" style="color:var(--red);font-weight:600">Colds knock your lungs back. Stay on Symbicort and act early when one starts.</div>
+    </div>
+
+    <!-- ══ MEDICATIONS ══ -->
+    <div class="hn-label">💊 MEDICATIONS</div>
+    <div class="hn-card" style="font-size:12px;line-height:1.7">
+      <div><strong style="color:var(--blue)">Symbicort 200/6</strong> · 1 puff twice daily, extra puffs for relief up to 6 a day</div>
+      <div><strong>Salbutamol</strong> · reliever, as needed</div>
+      <div><strong>Tamsulosin 400 mcg</strong> · once daily (prostate, replaced doxazosin)</div>
+      <div><strong>Finasteride</strong> · daily (prostate), approved by urology · <span style="color:var(--amber)">start date not recorded</span></div>
+      <div><strong>Loratadine 10 mg</strong> · only when your nose is running</div>
+      <div><strong>Celebrex (celecoxib) 100 mg</strong> · 1 capsule daily, hip pain. Daily use needs kidney and blood pressure checks</div>
+      <div class="hn-small">No known allergies (hospital record Aug 2026).</div>
     </div>
 
     <!-- ══ PROSTATE ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">🔬 PROSTATE SURVEILLANCE</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;margin-bottom:10px">
-        <div style="background:var(--green-dim);border-radius:10px;padding:10px 6px;border:1px solid rgba(46,125,82,0.2)">
-          <div style="font-size:20px;font-weight:800;color:var(--green)">15</div>
-          <div style="font-size:9px;color:var(--muted)">PSA µg/L</div>
-          <div style="font-size:9px;color:var(--muted2);margin-top:1px">Sep 2026</div>
-        </div>
-        <div style="background:var(--green-dim);border-radius:10px;padding:10px 6px;border:1px solid rgba(46,125,82,0.2)">
-          <div style="font-size:14px;font-weight:800;color:var(--green)">–ve</div>
-          <div style="font-size:9px;color:var(--muted)">Biopsy</div>
-          <div style="font-size:9px;color:var(--muted2);margin-top:1px">Aug 2026</div>
-        </div>
-        <div style="background:var(--blue-dim);border-radius:10px;padding:10px 6px;border:1px solid rgba(26,111,168,0.2)">
-          <div style="font-size:14px;font-weight:800;color:var(--blue)">Annual</div>
-          <div style="font-size:9px;color:var(--muted)">Next PSA</div>
-          <div style="font-size:9px;color:var(--muted2);margin-top:1px">Sep 2027</div>
-        </div>
+    <div class="hn-label">🔬 PROSTATE</div>
+    <div class="hn-card">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px">PSA history (µg/L, normal under 4)</div>
+      <div class="hn-bars">
+        <div class="hn-bar"><div style="height:29%"></div><span>4.3</span><em>Feb 17</em></div>
+        <div class="hn-bar"><div style="height:34%"></div><span>5.1</span><em>Oct 18</em></div>
+        <div class="hn-bar"><div style="height:53%"></div><span>8.0</span><em>Jul 20</em></div>
+        <div class="hn-bar"><div style="height:50%"></div><span>7.5</span><em>Mar 21</em></div>
+        <div class="hn-bar"><div style="height:64%"></div><span>9.6</span><em>Sep 23</em></div>
+        <div class="hn-bar"><div style="height:78%"></div><span>11.7</span><em>Jul 25</em></div>
+        <div class="hn-bar"><div style="height:83%"></div><span>12.4</span><em>Mar 26</em></div>
+        <div class="hn-bar"><div style="height:81%"></div><span>12.1</span><em>May 26</em></div>
       </div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.6;background:var(--surface2);border-radius:8px;padding:8px 10px">
-        <strong style="color:var(--text)">Monitoring plan:</strong> Annual PSA. If result exceeds 15 µg/L → repeat test in 6 weeks.<br>
-        Transperineal biopsy Aug 2026 — no malignancy detected. Urology: Sep 5, 2026.
-      </div>
+      <div class="hn-small" style="margin-top:8px">
+        Latest PSA is 12.1 (May 2026), a slow rise of about 1 a year since 2017. Prostate is enlarged (54–70 cc on scans), which raises PSA on its own. MRI 2026 showed a PI-RADS 3 area (PSA density 0.26). Transperineal biopsy 14 Aug 2026: <strong style="color:var(--green)">no cancer found</strong>. A 2020 biopsy was also clear. Urology clinic 3 Sep 2026 (letter 10 Sep) discharged you back to your GP.</div>
+      <div class="hn-note" style="margin-top:8px"><strong>Plan (urology letter 10 Sep 2026):</strong> PSA checks with your GP. Until age 76, if PSA goes over <strong>15</strong>, you can be referred back to urology. Next PSA about May 2027, or whenever your GP sets it.</div>
     </div>
 
-    <!-- ══ KIDNEY ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">🫘 KIDNEY FUNCTION</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div style="text-align:center">
-          <div style="font-size:32px;font-weight:800;color:var(--amber)">73</div>
-          <div style="font-size:9px;color:var(--muted)">eGFR</div>
-        </div>
-        <div style="flex:1">
-          <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;margin-bottom:4px">
-            <div style="height:100%;width:73%;background:var(--amber);border-radius:4px"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted2)">
-            <span>0</span><span style="color:var(--amber);font-weight:700">73 — mild reduction</span><span>100+</span>
-          </div>
-          <div style="font-size:10px;color:var(--muted);margin-top:5px;line-height:1.5">Stage G2 — mildly decreased. Monitoring annually. Avoid NSAIDs. Stay hydrated.</div>
-        </div>
-      </div>
+    <!-- ══ BLOOD TESTS ══ -->
+    <div class="hn-label">🩸 BLOOD TESTS · 16 MAR 2026</div>
+    <div class="hn-card">
+      <table class="hn-table">
+        <tr><th>Cholesterol</th><td>4.9</td><td class="ok">under 5.0</td></tr>
+        <tr><th>LDL ("bad")</th><td>3.3</td><td class="ok">under 3.4</td></tr>
+        <tr><th>HDL ("good")</th><td>1.33</td><td class="ok">over 1.0</td></tr>
+        <tr><th>Triglycerides</th><td>0.7</td><td class="ok">under 2.0</td></tr>
+        <tr><th>Chol/HDL ratio</th><td>3.7</td><td class="ok">under 4.5</td></tr>
+        <tr><th>eGFR (kidneys)</th><td>77</td><td class="ok">up from 73 (Jul 25)</td></tr>
+        <tr><th>Creatinine</th><td>87</td><td class="ok">normal</td></tr>
+        <tr><th>Haemoglobin</th><td>151</td><td class="ok">normal</td></tr>
+        <tr><th>Full blood count</th><td>all</td><td class="ok">normal</td></tr>
+        <tr><th>Liver (ALT, GGT, ALP)</th><td>all</td><td class="ok">normal</td></tr>
+        <tr><th>Bilirubin</th><td>24</td><td class="warn">slightly high (2–20)</td></tr>
+        <tr><th>HbA1c</th><td>36</td><td class="warn">Mar 2020, overdue</td></tr>
+      </table>
+      <div class="hn-small">Down from cholesterol 5.2 and LDL 3.7 in Nov 2022. Whether LDL 3.3 needs action depends on your heart risk score, which isn't on file. Blood pressure was 108/65 in Aug 2026.</div>
     </div>
 
-    <!-- ══ CARDIOVASCULAR ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">❤️ CARDIOVASCULAR</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-        <div style="text-align:center;background:var(--green-dim);border-radius:10px;padding:10px;border:1px solid rgba(46,125,82,0.2)">
-          <div style="font-size:18px;font-weight:800;color:var(--green)">116/65</div>
-          <div style="font-size:9px;color:var(--muted)">Blood pressure</div>
-          <div style="font-size:9px;color:var(--green);font-weight:600;margin-top:2px">Excellent</div>
-        </div>
-        <div style="text-align:center;background:var(--green-dim);border-radius:10px;padding:10px;border:1px solid rgba(46,125,82,0.2)">
-          <div style="font-size:18px;font-weight:800;color:var(--green)">Normal</div>
-          <div style="font-size:9px;color:var(--muted)">Blood sugar</div>
-          <div style="font-size:9px;color:var(--green);font-weight:600;margin-top:2px">HbA1c within range</div>
-        </div>
-      </div>
-      <div style="background:var(--amber-dim);border:1px solid rgba(192,122,32,0.25);border-radius:8px;padding:9px 12px;font-size:11px;color:var(--muted);line-height:1.5">
-        ⚠️ <strong style="color:var(--amber)">Lipid panel last recorded 2016</strong> — outdated. Request updated panel at next GP visit.
-      </div>
+    <!-- ══ OTHER CONDITIONS ══ -->
+    <div class="hn-label">📋 OTHER CHECKS</div>
+    <div class="hn-card" style="font-size:12px;line-height:1.65">
+      <div class="hn-row"><strong>Hips</strong> · X-ray 29 Jan 2026: moderate arthritis right, mild left, unchanged since 2022. Ortho referral: no progress yet.</div>
+      <div class="hn-row"><strong>Bowel</strong> · FIT screening 12 Nov 2025 <span style="color:var(--green)">negative</span>. Next kit arrives about Nov 2027. Past polyps (2019) were benign.</div>
+      <div class="hn-row"><strong>Skin</strong> · MoleMap 1 Oct 2026: 3 spots checked, <span style="color:var(--green)">all benign</span>, including the one on your right sole. Next check Oct 2027.</div>
+      <div class="hn-row"><strong>Eyes and hearing</strong> · Specsavers Aug 2026: reading glasses only, hearing fine.</div>
+      <div class="hn-row"><strong>Teeth</strong> · Crown fitted at Palms 9 Oct 2026. Denture appointment 12 Oct, 11am.</div>
+      <div class="hn-row" style="border:none"><strong>Flu vaccine</strong> · done for 2026. Next due about Mar 2027.</div>
     </div>
 
-    <!-- ══ ACTIVE CONDITIONS ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">📋 ACTIVE CONDITIONS & MONITORING</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;font-size:13px;color:var(--text);line-height:1.8">
-      <strong style="color:var(--amber)">Asthma / COPD overlap</strong> — mildly obstructive, Symbicort daily, FEV1 target 80%+. <strong style="color:var(--amber)">Prostate</strong> — PSA 15 µg/L, biopsy clear Aug 2026, annual surveillance. <strong style="color:var(--amber)">Kidney</strong> — eGFR 73, Stage G2 mild reduction, annual monitoring, avoid NSAIDs. <strong style="color:var(--blue)">Bowel screening</strong> — enrolled Nov 2025, follow up as scheduled. <strong style="color:var(--muted)">Hip</strong> — Jan 2026 X-ray on file, review if symptoms progress. <strong style="color:var(--muted)">Skin</strong> — MoleMap report on file, continue annual review.
-    </div>
-
-    <!-- ══ KEY UPCOMING ══ -->
-    <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.6px;margin-bottom:8px">📅 KEY UPCOMING ACTIONS</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;font-size:13px;color:var(--text);line-height:1.8">
-      Request an <strong style="color:var(--orange)">updated lipid panel</strong> at the next GP visit — the 2016 result is too old to be useful. Annual <strong style="color:var(--orange)">PSA due Sep 2027</strong> — if the result exceeds 15 µg/L, repeat in 6 weeks. Get the <strong style="color:var(--orange)">flu vaccination</strong> this season — critical given how badly respiratory function drops after infection. When weight and IMT training targets are met, book the <strong style="color:var(--blue)">dive medical</strong> with Dr Tovaranonte at Doctors on Cashel, 03 366 2578 — bring both spirometry reports. Continue the <strong style="color:var(--muted)">bowel screening programme</strong> as scheduled.
+    <!-- ══ BACKUP ══ -->
+    <div class="hn-label">💾 YOUR DATA</div>
+    <div class="hn-card">
+      <div class="hn-small" style="margin-top:0;margin-bottom:10px">Safari can wipe this app's saved data. Back up once a week to your Files app, and restore from it if anything disappears.</div>
+      <div style="display:flex;gap:8px">
+        <button class="modal-save" style="flex:1" onclick="backupData()">Back up now</button>
+        <button class="modal-cancel" style="flex:1" onclick="document.getElementById('restoreFile').click()">Restore</button>
+      </div>
+      <input type="file" id="restoreFile" accept=".json,application/json,text/plain" style="display:none" onchange="restoreData(this)">
+      <div class="hn-small" id="backupInfo"></div>
     </div>
 
   </div>
 </div>
 
+<!-- ── Mind panel ── -->
+<div class="panel-view" id="mindView">
+  <div style="padding:16px 0 100px">
 
+    <div style="font-size:20px;font-weight:800;color:var(--orange);letter-spacing:-0.3px">How are you, really?</div>
+    <div style="font-size:12px;color:var(--muted);margin:3px 0 14px">Three taps a day. Patterns show up here before they show up anywhere else.</div>
+
+    <div class="hn-card">
+      <div class="mind-q">Mood today</div>
+      <div class="mind-scale" id="mindMood">
+        <button onclick="setMind('mood',1)">1<small>Low</small></button>
+        <button onclick="setMind('mood',2)">2<small>Flat</small></button>
+        <button onclick="setMind('mood',3)">3<small>OK</small></button>
+        <button onclick="setMind('mood',4)">4<small>Good</small></button>
+        <button onclick="setMind('mood',5)">5<small>Great</small></button>
+      </div>
+      <div class="mind-q">Energy</div>
+      <div class="mind-scale" id="mindEnergy">
+        <button onclick="setMind('energy',1)">1<small>Drained</small></button>
+        <button onclick="setMind('energy',2)">2<small>Tired</small></button>
+        <button onclick="setMind('energy',3)">3<small>OK</small></button>
+        <button onclick="setMind('energy',4)">4<small>Good</small></button>
+        <button onclick="setMind('energy',5)">5<small>Strong</small></button>
+      </div>
+      <div class="mind-q">Sleep last night</div>
+      <div class="mind-scale" id="mindSleep">
+        <button onclick="setMind('sleep',1)">&lt;5<small>hrs</small></button>
+        <button onclick="setMind('sleep',2)">5<small>hrs</small></button>
+        <button onclick="setMind('sleep',3)">6<small>hrs</small></button>
+        <button onclick="setMind('sleep',4)">7<small>hrs</small></button>
+        <button onclick="setMind('sleep',5)">8+<small>hrs</small></button>
+      </div>
+      <div class="mind-q">TV and YouTube today</div>
+      <div class="mind-scale" id="mindTv" style="grid-template-columns:repeat(4,1fr)">
+        <button onclick="setMind('tv',1)">&lt;1<small>hr</small></button>
+        <button onclick="setMind('tv',2)">1–2<small>hrs</small></button>
+        <button onclick="setMind('tv',3)">2–3<small>hrs</small></button>
+        <button onclick="setMind('tv',4)">3+<small>hrs</small></button>
+      </div>
+      <div class="mind-q">Ate for comfort, not hunger?</div>
+      <div class="mind-scale" id="mindComfort" style="grid-template-columns:repeat(3,1fr)">
+        <button onclick="setMind('comfort',1)">No</button>
+        <button onclick="setMind('comfort',2)">A bit</button>
+        <button onclick="setMind('comfort',3)">Yes</button>
+      </div>
+      <div class="mind-q">Early warning signs today (tap any that fit)</div>
+      <div class="sign-grid">
+        <button class="sign-btn" id="sign_screen" onclick="toggleSign('screen')">Too much YouTube or TV</button>
+        <button class="sign-btn" id="sign_hobby" onclick="toggleSign('hobby')">Skipped guitar or hobbies</button>
+        <button class="sign-btn" id="sign_food" onclick="toggleSign('food')">Ate for comfort</button>
+        <button class="sign-btn" id="sign_late" onclick="toggleSign('late')">Stayed up late, slept badly</button>
+        <button class="sign-btn" id="sign_avoid" onclick="toggleSign('avoid')">Avoided people, calls or messages</button>
+        <button class="sign-btn" id="sign_skip" onclick="toggleSign('skip')">Skipped the morning block</button>
+        <button class="sign-btn" id="sign_irrit" onclick="toggleSign('irrit')">Short-tempered or flat</button>
+      </div>
+      <div class="mind-q">One good thing today (optional)</div>
+      <input type="text" id="mindGood" class="mind-input" placeholder="A good chat, a good run, a swim..." onchange="saveMindGood()">
+    </div>
+
+    <div class="hn-label" style="margin-top:4px">LAST 14 DAYS</div>
+    <div class="hn-card">
+      <div id="mindHistory"></div>
+      <div id="mindSignal"></div>
+    </div>
+
+    <div class="hn-label">🌙 SLEEP ON A NIGHT-SHIFT LIFE</div>
+    <div class="hn-card" style="font-size:12px;line-height:1.65">
+      <div class="hn-row">Same sleep window every day, days off included, as close as you can.</div>
+      <div class="hn-row">After a shift: 20 minutes to unwind with no screens before bed. Your mind is still driving.</div>
+      <div class="hn-row">Dark, cool room. Eye mask if daylight gets in.</div>
+      <div class="hn-row">If you have a diet caffeine drink, keep it at least 6 hours before you plan to sleep. Fewer is better.</div>
+      <div class="hn-row" style="border:none">Poor sleep makes hunger, mood and breathing all worse. It is upstream of everything else in this app.</div>
+    </div>
+
+    <div class="hn-label">🤝 WHAT KEEPS YOU WELL</div>
+    <div class="hn-card" style="font-size:12px;line-height:1.65">
+      <div class="hn-row"><strong>Loneliness drives the eating.</strong> Tired, bored or unconnected is when the mind games start. Feeding a lonely evening never fixes it.</div>
+      <div class="hn-row"><strong>Turn what you already do into people.</strong> Stay 10 minutes after spin or circuit for a chat. Do parkrun for the coffee afterwards. Pick one person at church to get to know properly.</div>
+      <div class="hn-row"><strong>Find people who share the goal.</strong> A dive club or Men's Shed gives you friends without having to be outgoing. The activity does the talking.</div>
+      <div class="hn-row"><strong>Talk it through.</strong> A counsellor helps with loneliness and with a relationship that has gone transactional. 1737 is free, and you can ask your GP practice about free sessions.</div>
+      <div class="hn-row" style="border:none"><strong>Movement outside.</strong> A walk or swim in daylight lifts mood and resets your body clock.</div>
+    </div>
+
+    <div class="hn-label">📞 IF THINGS FEEL HEAVY</div>
+    <div class="hn-card" style="font-size:12px;line-height:1.8">
+      <div><strong>1737</strong> · free call or text, any time, trained counsellor</div>
+      <div><strong>Lifeline</strong> · 0800 543 354</div>
+      <div><strong>Healthline</strong> · 0800 611 116</div>
+      <div><strong>Your GP</strong> · Dr Kent Johnston · 03 348 8989</div>
+      <div style="color:var(--red);font-weight:600">Emergency · 111</div>
+    </div>
+
+  </div>
+</div>
 
 
 <!-- ── Exercise modal ── -->
@@ -1830,8 +1981,9 @@ function load() {
 function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
 
 function dayKey(d) {
-  const dt = d || new Date();
-  return dt.toISOString().slice(0,10);
+  const dt = d || new Date(Date.now() - 3 * 3600000);
+  const m = dt.getMonth() + 1, day = dt.getDate();
+  return dt.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
 }
 
 function getDay(key) {
@@ -1848,21 +2000,25 @@ function getTodayData() { return getDay(dayKey()); }
 // ── Wellness anchors (daily non-negotiables) ─────────────────────
 // ── Daily Checklist ──────────────────────────────────────────────
 // ── Daily Checklist ──────────────────────────────────────────────
-const CL_IDS = ['symbicort','powerbreathe_am','stretch','fast_window','foundation','exercise','powerbreathe_pm','kitchen','brush','floss'];
+const CORE_IDS = ['core_meds','core_morning','core_eat','core_connect','core_evening'];
+const CL_IDS = CORE_IDS.concat(['exercise','guitar','foundation','mindlog']);
+const STREAK_MILESTONES = [[7,'One week. The habit is starting to set.'],[14,'Two weeks. This is now part of who you are.'],[30,'A month. Most people never get here.'],[66,'66 days. Research says this is when a habit becomes automatic.'],[100,'100 days. Remarkable.']];
+function isCoreDone(td) { return !!(td && td.checks && CORE_IDS.every(function(id) { return td.checks[id]; })); }
 
 function applyChecklistState() {
   const { data, key } = getTodayData();
   const checks = data[key].checks || {};
-  const total = CL_IDS.length;
-  const done  = CL_IDS.filter(id => checks[id]).length;
+  checks.mindlog = !!(data[key].mind && data[key].mind.mood);
+  const total = CORE_IDS.length;
+  const done  = CORE_IDS.filter(id => checks[id]).length;
 
   // Update subtitle
   const sub = document.getElementById('checklistSubtitle');
   if (sub) {
     if (done === total) {
-      sub.innerHTML = '<span style="color:var(--green);font-weight:700">All done today! That\'s what progress looks like.</span>';
+      sub.innerHTML = '<span style="color:var(--green);font-weight:700">All 5 done. Today counts.</span>';
     } else {
-      sub.textContent = done + ' of ' + total + ' done — resets tomorrow.';
+      sub.textContent = done + ' of 5 done. Do these 5 and the day counts.';
     }
   }
 
@@ -1885,6 +2041,7 @@ function toggleCheck(id) {
   save(data);
   applyChecklistState();
   updateStreak();
+  renderWeek();
 }
 
 function renderChecklist() { applyChecklistState(); }
@@ -1895,18 +2052,48 @@ function updateAnchorStreak() {
 
 function updateTension() { /* removed */ }
 function updateStreak() {
+  // A day counts when all 5 must-dos are ticked. One missed day per Mon-Sun week is
+  // forgiven (the weekly free pass); a second miss in the same week ends the streak.
+  // Today never breaks the streak while it is still in progress.
   const data = load();
+  const keys = Object.keys(data).filter(function(k) { return /^\d{4}-\d{2}-\d{2}$/.test(k); }).sort();
+  const first = keys.length ? keys[0] : dayKey();
   let streak = 0;
-  const today = new Date();
-  for (let i = 0; i < 60; i++) {
-    const d = new Date(today); d.setDate(d.getDate() - i);
-    const k = dayKey(d); const td = data[k];
-    if (!td) break;
-    const hasEx = (td.checks && td.checks['exercise']) || (td.events || []).some(e => e.type === 'exercise');
-    if (hasEx) streak++; else if (i > 0) break;
+  const passUsed = {};
+  const todayK = dayKey();
+  const base = new Date(Date.now() - 3 * 3600000);
+  for (let i = 0; i < 1000; i++) {
+    const d = new Date(base); d.setDate(base.getDate() - i);
+    const k = dayKey(d);
+    if (k < first) break;
+    if (isCoreDone(data[k])) { streak++; continue; }
+    if (k === todayK) continue;
+    const wk = getWeekKey(d);
+    if (!passUsed[wk]) { passUsed[wk] = k; continue; }
+    break;
   }
+  let best = 0;
+  try { best = parseInt(localStorage.getItem('oscar_beststreak') || '0', 10) || 0; } catch (e) {}
+  if (streak > best) { best = streak; try { localStorage.setItem('oscar_beststreak', String(best)); } catch (e) {} }
   const el = document.getElementById('streakNum');
   if (el) el.textContent = streak;
+
+  const card = document.getElementById('streakCard');
+  if (!card) return;
+  const thisWeekPass = passUsed[getWeekKey(base)];
+  let next = null, msg = '';
+  STREAK_MILESTONES.forEach(function(m) { if (streak >= m[0]) msg = m[1]; else if (!next) next = m[0]; });
+  const doneToday = isCoreDone(data[todayK]);
+  card.innerHTML =
+    '<div style="display:flex;align-items:center;gap:14px">' +
+      '<div style="text-align:center;min-width:64px"><div style="font-size:34px;font-weight:800;color:var(--orange);line-height:1">' + streak + '</div><div style="font-size:10px;color:var(--muted)">day streak</div></div>' +
+      '<div style="flex:1;font-size:12px;line-height:1.5;color:var(--muted)">' +
+        (msg ? '<div style="color:var(--green);font-weight:700">' + msg + '</div>' : '') +
+        (next ? '<div>' + (next - streak) + ' more day' + (next - streak === 1 ? '' : 's') + ' to ' + next + '.</div>' : '') +
+        '<div>Free pass this week: ' + (thisWeekPass ? '<strong style="color:var(--amber)">used</strong>' : '<strong style="color:var(--green)">available</strong>') + ' · Best: ' + best + '</div>' +
+        (doneToday ? '' : '<div style="margin-top:2px">Today is still open.</div>') +
+      '</div>' +
+    '</div>';
 }
 
 // ── Event log ────────────────────────────────────────────────────
@@ -2088,27 +2275,43 @@ function saveExercise() {
   save(data);
   document.getElementById('overlayExercise').classList.remove('open');
   renderLog();
-  renderRings();
-  renderAnchors();
-  updateTension();
-  updateAnchorStreak();
+  updateStreak();
+  renderWeek();
   toast(`${selectedSessions.size} session${selectedSessions.size > 1 ? 's' : ''} logged ✓`);
 }
 
-// ── Weight (Today tab weight input removed — weight now in Weight tab) ───
-function saveWeight() { /* weight entry moved to Weight tab */ }
+// ── Weight ───────────────────────────────────────────────────────
+function saveWeight() {
+  const val = parseFloat(document.getElementById('weightInput').value);
+  if (!val || val < 50 || val > 150) { toast('Enter a valid weight'); return; }
+  const { data, key } = getTodayData();
+  data[key].weight = val;
+  save(data);
+  updateWeightBar(val);
+  toast(`Weight saved: ${val} kg`);
+}
 
 function updateWeightBar(w) {
   const pct = Math.max(0, Math.min(100, ((START_W - w) / (START_W - GOAL_W)) * 100));
-  const fill = document.getElementById('wpFill');
-  const left = document.getElementById('wpLeft');
+  const fill = document.getElementById('wpFill'), left = document.getElementById('wpLeft');
   if (fill) fill.style.width = pct + '%';
   if (left) left.textContent = w.toFixed(1) + ' kg';
 }
 
 function loadWeight() {
-  const w = getLatestWeight();
-  updateWeightBar(w);
+  const { data, key } = getTodayData();
+  const w = data[key].weight;
+  if (w) {
+    document.getElementById('weightInput').value = w;
+    updateWeightBar(w);
+  } else {
+    // Fall back to most recently logged weight across all days
+    const allEntries = Object.entries(data)
+      .filter(([k, v]) => v && v.weight)
+      .sort((a, b) => a[0].localeCompare(b[0]));
+    const lastW = allEntries.length ? allEntries[allEntries.length - 1][1].weight : START_W;
+    updateWeightBar(lastW);
+  }
 }
 
 // ── Evening mode log ─────────────────────────────────────────────
@@ -2183,42 +2386,6 @@ function renderEveningModeLog() {
 
 
 // ── Progress Dashboard ────────────────────────────────────────────
-function showTab(view, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-
-  const allViews = ['todayView','weightView','eatplanView','dashView','postshiftView','fastView','diveView'];
-  allViews.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
-
-  if (view === 'today') {
-    document.getElementById('todayView').style.display = 'block';
-    renderChecklist();
-    renderLog();
-  } else if (view === 'weight') {
-    document.getElementById('weightView').style.display = 'block';
-    initWeightTab();
-  } else if (view === 'eatplan') {
-    document.getElementById('eatplanView').style.display = 'block';
-  } else if (view === 'dash') {
-    document.getElementById('dashView').style.display = 'block';
-    renderDashboard();
-    initPeakFlow();
-  } else if (view === 'postshift') {
-    document.getElementById('postshiftView').style.display = 'block';
-    renderEveningModeLog();
-  } else if (view === 'fast') {
-    document.getElementById('fastView').style.display = 'block';
-    updateFastTimer();
-    renderFastHistory();
-    if (loadFastData().active) {
-      if (fastInterval) clearInterval(fastInterval);
-      fastInterval = setInterval(updateFastTimer, 60000);
-    }
-  } else if (view === 'dive') {
-    document.getElementById('diveView').style.display = 'block';
-  }
-}
-
 function refreshDashStats() { renderDashboard(); updateMindWeight(); }
 
 function renderDashboard() {
@@ -2235,7 +2402,7 @@ function renderDashboard() {
 
   const latestW  = weightEntries.length ? weightEntries[weightEntries.length - 1].w : null;
   const lost     = latestW ? +(START_W - latestW).toFixed(1) : 0;
-  const toGo     = latestW ? +(latestW - GOAL_W).toFixed(1) : START_W - GOAL_W;
+  const toGo     = latestW ? +(latestW - GOAL_W).toFixed(1) : +(START_W - GOAL_W).toFixed(1);
   const pctW     = latestW ? Math.min(100, Math.round(((START_W - latestW) / (START_W - GOAL_W)) * 100)) : 0;
   const wBarCol  = pctW >= 80 ? 'var(--green)' : pctW >= 40 ? 'var(--amber)' : 'var(--orange)';
 
@@ -2243,7 +2410,7 @@ function renderDashboard() {
   const last30Keys = [];
   for (let i = 0; i < 30; i++) {
     const d = new Date(); d.setDate(d.getDate() - i);
-    last30Keys.push(d.toISOString().slice(0, 10));
+    last30Keys.push(dayKey(d));
   }
   const exDays = last30Keys.filter(k => {
     const day = data[k];
@@ -2260,7 +2427,7 @@ function renderDashboard() {
   let brushStreak = 0;
   for (let i = 0; i < 60; i++) {
     const d = new Date(); d.setDate(d.getDate() - i);
-    const k = d.toISOString().slice(0, 10);
+    const k = dayKey(d);
     if (data[k] && data[k].rings && data[k].rings['brush']) brushStreak++;
     else break;
   }
@@ -2369,7 +2536,6 @@ function renderPostshiftChecklist() {
   const { data, key } = getTodayData();
   const ps = data[key].postshift || {};
   const container = document.getElementById('postshiftChecklist');
-  if (!container) return;
   container.innerHTML = '';
   POSTSHIFT_CHECKS.forEach(item => {
     const done = !!ps[item.id];
@@ -2578,7 +2744,7 @@ function renderFastHistory() {
 let manualFastCompleted = null;
 
 function openManualFastLog() {
-  const today = new Date().toISOString().slice(0,10);
+  const today = dayKey();
   document.getElementById('manualFastDate').value = today;
   document.getElementById('manualFastHours').value = 24;
   document.getElementById('manualFastNote').value = '';
@@ -2632,8 +2798,700 @@ function saveManualFast() {
   toast('Fast recorded ✓');
 }
 
+// ── Weekly check-in ──────────────────────────────────────────────
+const WCI_KEY = 'oscar_wci_v1';
 
-function updateMindWeight() { /* Mind tab removed — stub kept for init compat */ }
+function loadWCI() {
+  try { return JSON.parse(localStorage.getItem(WCI_KEY)) || {}; } catch { return {}; }
+}
+function saveWCIData(d) { localStorage.setItem(WCI_KEY, JSON.stringify(d)); }
+
+function renderWCIScorecard() {
+  const el = document.getElementById('wciScorecard');
+  if (!el) return;
+
+  // Gather this week's behaviour data
+  const data = load();
+  const today = new Date();
+  let brushDays = 0, exerciseDays = 0, diveFitDays = 0, activeDays = 0, stretchDays = 0;
+  const WEEK_DAYS = 7;
+
+  for (let i = 0; i < WEEK_DAYS; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const k = dayKey(d);
+    const td = data[k];
+    if (!td) continue;
+    if (td.rings && td.rings['brush']) brushDays++;
+    const hasEx = (td.events || []).some(e => e.type === 'exercise');
+    const hasRingEx = td.rings && (td.rings['gym'] || td.rings['routine31']);
+    if (hasEx || hasRingEx) exerciseDays++;
+    if ((td.events || []).some(e => e.type === 'exercise' && e.dive)) diveFitDays++;
+    if (td.rings && (td.rings['stretch_am'] || td.rings['stretch_pm'])) stretchDays++;
+    const ev = td.evening || {};
+    if (ev['ev_forex'] || ev['ev_guitar'] || ev['ev_photos'] || ev['ev_read']) activeDays++;
+  }
+
+  // Outcome data from WCI
+  const all = loadWCI();
+  const weeks = Object.keys(all).sort().reverse();
+  const thisWk = all[weeks[0]] || {};
+  const lastWk = all[weeks[1]] || {};
+  const weightDelta = (thisWk.weight && lastWk.weight) ? (thisWk.weight - lastWk.weight).toFixed(1) : null;
+  const pfDelta = (thisWk.peakFlow && lastWk.peakFlow) ? thisWk.peakFlow - lastWk.peakFlow : null;
+
+  // Behaviour score /100
+  const bScore = Math.round(
+    (brushDays / 7) * 20 +
+    (Math.min(stretchDays, 6) / 6) * 25 +
+    (Math.min(exerciseDays, 5) / 5) * 25 +
+    (Math.min(diveFitDays, 4) / 4) * 20 +
+    (Math.min(activeDays, 5) / 5) * 10
+  );
+
+  const bColor = bScore >= 80 ? 'var(--orange)' : bScore >= 50 ? 'var(--amber)' : 'var(--red)';
+  const bMsg = bScore >= 80 ? 'Strong week — the habits are holding.' :
+               bScore >= 50 ? 'Solid progress. A few more consistent days makes the difference.' :
+               'The choices are available every day. Start fresh today.';
+
+  const weightHtml = weightDelta !== null
+    ? `<div style="text-align:center">
+        <div style="font-size:22px;font-weight:800;color:${parseFloat(weightDelta) <= 0 ? 'var(--orange)' : 'var(--amber)'}">${parseFloat(weightDelta) <= 0 ? '▼' : '▲'} ${Math.abs(weightDelta)} kg</div>
+        <div style="font-size:10px;color:var(--muted)">vs last week</div>
+       </div>`
+    : `<div style="text-align:center"><div style="font-size:13px;color:var(--muted2)">No data yet</div><div style="font-size:10px;color:var(--muted2)">weight</div></div>`;
+
+  const pfHtml = pfDelta !== null
+    ? `<div style="text-align:center">
+        <div style="font-size:22px;font-weight:800;color:${pfDelta >= 0 ? 'var(--orange)' : 'var(--red)'}">${pfDelta >= 0 ? '▲' : '▼'} ${Math.abs(pfDelta)}</div>
+        <div style="font-size:10px;color:var(--muted)">L/min vs last week</div>
+       </div>`
+    : `<div style="text-align:center"><div style="font-size:13px;color:var(--muted2)">No data yet</div><div style="font-size:10px;color:var(--muted2)">peak flow</div></div>`;
+
+  el.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:4px">
+      <!-- Score header -->
+      <div style="padding:16px 16px 12px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.4px;margin-bottom:2px">THIS WEEK'S SCORE</div>
+            <div style="font-size:11px;color:var(--muted2)">Sum of good choices</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:42px;font-weight:900;color:${bColor};line-height:1">${bScore}</div>
+            <div style="font-size:10px;color:var(--muted)">/100</div>
+          </div>
+        </div>
+        <div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden;margin-bottom:8px">
+          <div style="height:100%;width:${bScore}%;background:${bColor};border-radius:4px;transition:width 0.6s ease"></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);font-style:italic">${bMsg}</div>
+      </div>
+
+      <!-- Behaviour breakdown -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+        <div style="padding:10px 14px;border-right:1px solid var(--border)">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600">BEHAVIOURS</div>
+          ${[
+            { icon:'🪥', label:'Brush & floss', val:`${brushDays}/7 nights`, ok: brushDays >= 5 },
+            { icon:'🤸', label:'Stretch days',  val:`${stretchDays}/6`, ok: stretchDays >= 5 },
+            { icon:'💪', label:'Exercise days', val:`${exerciseDays}/6`, ok: exerciseDays >= 4 },
+            { icon:'🤿', label:'Dive-fit sessions', val:`${diveFitDays} this week`, ok: diveFitDays >= 3 },
+            { icon:'🎸', label:'Active evenings', val:`${activeDays}/7`, ok: activeDays >= 4 },
+          ].map(r => `
+            <div style="display:flex;align-items:center;gap:6px;padding:3px 0">
+              <span style="font-size:13px">${r.icon}</span>
+              <div style="flex:1;font-size:11px;color:var(--muted)">${r.label}</div>
+              <span style="font-size:11px;font-weight:700;color:${r.ok ? 'var(--orange)' : 'var(--amber)'}">${r.val}</span>
+            </div>`).join('')}
+        </div>
+        <div style="padding:10px 14px">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600">OUTCOMES</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+            ${weightHtml}
+            ${pfHtml}
+
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function initWeeklyCheckIn() {
+  renderWCIScorecard();
+  const wk = getWeekKey();
+  const all = loadWCI();
+  const entry = all[wk] || {};
+
+  if (entry.weight) {
+    document.getElementById('wciWeight').value = entry.weight;
+    updateWCIWeightBar(entry.weight);
+  }
+  if (entry.peakFlow) document.getElementById('wciPF').value = entry.peakFlow;
+  if (entry.pfNote)  document.getElementById('wciPFNote').value = entry.pfNote;
+  renderWCIWeightHistory();
+  renderWCIPFHistory();
+  renderPhotoView();
+}
+
+function updateWCIWeightBar(w) {
+  const pct = Math.max(0, Math.min(100, ((START_W - w) / (START_W - GOAL_W)) * 100));
+  const bar = document.getElementById('wciWeightBar');
+  const pctEl = document.getElementById('wciWeightPct');
+  if (bar) bar.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct.toFixed(0) + '% to goal';
+}
+
+function saveWeeklyCheckIn() {
+  const wk = getWeekKey();
+  const all = loadWCI();
+  const weight   = parseFloat(document.getElementById('wciWeight').value);
+  const peakFlow = parseInt(document.getElementById('wciPF').value);
+  const pfNote   = document.getElementById('wciPFNote').value.trim();
+  if (!weight && !peakFlow) {
+    toast('Enter at least one measurement to save');
+    return;
+  }
+
+  const entry = all[wk] || {};
+  if (weight && weight >= 50 && weight <= 150) entry.weight = weight;
+  if (peakFlow && peakFlow >= 100 && peakFlow <= 700) {
+    entry.peakFlow = peakFlow;
+    entry.pfNote = pfNote;
+    const pfArr = loadPF();
+    const today = dayKey();
+    const existing = pfArr.findIndex(r => r.date === today);
+    const pfEntry = { date: today, reading: peakFlow, note: pfNote };
+    if (existing >= 0) pfArr[existing] = pfEntry;
+    else pfArr.push(pfEntry);
+    pfArr.sort((a,b) => a.date.localeCompare(b.date));
+    savePFData(pfArr);
+  }
+  all[wk] = entry;
+  saveWCIData(all);
+
+  if (weight) {
+    const { data, key } = getTodayData();
+    data[key].weight = weight;
+    save(data);
+    refreshDashStats();
+  }
+
+  renderWCIWeightHistory();
+  renderWCIPFHistory();
+  renderWCIScorecard();
+  toast('Weekly check-in saved ✓');
+}
+
+
+
+function renderWCIWeightHistory() {
+  const all = loadWCI();
+  const el = document.getElementById('wciWeightHistory');
+  if (!el) return;
+  const weeks = Object.keys(all).filter(k => all[k].weight).sort().reverse().slice(0,8);
+  if (!weeks.length) { el.innerHTML = ''; return; }
+
+  el.innerHTML = `<div style="margin-top:4px">` +
+    weeks.map((wk, i) => {
+      const w = all[wk].weight;
+      const prev = weeks[i+1] ? all[weeks[i+1]].weight : null;
+      const delta = prev ? (w - prev).toFixed(1) : null;
+      const deltaHtml = delta
+        ? `<span style="color:${parseFloat(delta) < 0 ? 'var(--orange)' : 'var(--amber)'};font-size:11px;font-weight:700">${parseFloat(delta) < 0 ? '▼' : '▲'} ${Math.abs(delta)}kg</span>`
+        : '';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+        <span style="font-size:12px;color:var(--muted)">${weekLabel(wk)}</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${deltaHtml}
+          <span style="font-size:14px;font-weight:700;color:var(--text)">${w} kg</span>
+        </div>
+      </div>`;
+    }).join('') + `</div>`;
+}
+
+function renderWCIPFHistory() {
+  const all = loadWCI();
+  const el = document.getElementById('wciPFHistory');
+  if (!el) return;
+  const weeks = Object.keys(all).filter(k => all[k].peakFlow).sort().reverse().slice(0,6);
+  if (!weeks.length) { el.innerHTML = ''; return; }
+
+  el.innerHTML = `<div style="margin-top:4px">` +
+    weeks.map((wk, i) => {
+      const pf = all[wk].peakFlow;
+      const prev = weeks[i+1] ? all[weeks[i+1]].peakFlow : null;
+      const delta = prev ? pf - prev : null;
+      const deltaHtml = delta !== null
+        ? `<span style="color:${delta > 0 ? 'var(--orange)' : delta < 0 ? 'var(--red)' : 'var(--muted)'};font-size:11px;font-weight:700">${delta > 0 ? '▲' : delta < 0 ? '▼' : '—'} ${Math.abs(delta)}</span>`
+        : '';
+      const barPct = Math.min(100, Math.round((pf / 520) * 100));
+      const barColor = pf >= 420 ? 'var(--orange)' : pf >= 320 ? 'var(--amber)' : 'var(--red)';
+      return `<div style="padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+          <span style="font-size:12px;color:var(--muted)">${weekLabel(wk)}</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            ${deltaHtml}
+            <span style="font-size:14px;font-weight:700;color:var(--text)">${pf} <span style="font-size:10px;font-weight:400;color:var(--muted)">L/min</span></span>
+          </div>
+        </div>
+        <div style="height:3px;background:rgba(0,0,0,0.06);border-radius:2px;overflow:hidden">
+          <div style="height:100%;width:${barPct}%;background:${barColor};border-radius:2px"></div>
+        </div>
+      </div>`;
+    }).join('') + `</div>`;
+}
+
+// ── Photo journal ─────────────────────────────────────────────────
+
+// Week key: ISO year + week number e.g. "2026-W36"
+function getWeekKey(date) {
+  const d = date ? new Date(date) : new Date();
+  const jan4 = new Date(d.getFullYear(), 0, 4);
+  const startOfWeek1 = new Date(jan4);
+  startOfWeek1.setDate(jan4.getDate() - ((jan4.getDay() + 6) % 7));
+  const diff = d - startOfWeek1;
+  const week = Math.floor(diff / (7 * 24 * 60 * 60 * 1000)) + 1;
+  return `${d.getFullYear()}-W${String(week).padStart(2,'0')}`;
+}
+
+function weekLabel(wk) {
+  // "2026-W36" → "Week 36, 2026"
+  const [yr, w] = wk.split('-W');
+  // Find Monday of that week
+  const jan4 = new Date(parseInt(yr), 0, 4);
+  const startOfWeek1 = new Date(jan4);
+  startOfWeek1.setDate(jan4.getDate() - ((jan4.getDay() + 6) % 7));
+  const monday = new Date(startOfWeek1);
+  monday.setDate(startOfWeek1.getDate() + (parseInt(w) - 1) * 7);
+  return monday.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+const PHOTO_KEY = 'oscar_photos_v1';
+
+function loadPhotos() {
+  try { return JSON.parse(localStorage.getItem(PHOTO_KEY)) || {}; } catch { return {}; }
+}
+function savePhotos(photos) { localStorage.setItem(PHOTO_KEY, JSON.stringify(photos)); }
+
+// Compress image to JPEG dataURL at max 600px wide, quality 0.75
+function compressImage(file, callback) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 600;
+      let w = img.width, h = img.height;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      callback(canvas.toDataURL('image/jpeg', 0.75));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function triggerCamera() {
+  const inp = document.getElementById('photoFileInput');
+  inp.setAttribute('capture', 'user'); // front camera
+  inp.click();
+}
+
+function triggerGallery() {
+  const inp = document.getElementById('photoGalleryInput');
+  inp.click();
+}
+
+function handlePhotoFile(file) {
+  if (!file) return;
+  compressImage(file, (dataUrl) => {
+    const wk = getWeekKey();
+    const photos = loadPhotos();
+    // Get today's weight for badge
+    const { data, key } = getTodayData();
+    const weight = data[key].weight || null;
+    photos[wk] = { dataUrl, weight, date: new Date().toISOString() };
+    savePhotos(photos);
+    renderPhotoView();
+    toast('Photo saved ✓');
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const photoInput = document.getElementById('photoFileInput');
+  if (photoInput) photoInput.addEventListener('change', (e) => {
+    handlePhotoFile(e.target.files[0]);
+    e.target.value = '';
+  });
+  const galleryInput = document.getElementById('photoGalleryInput');
+  if (galleryInput) galleryInput.addEventListener('change', (e) => {
+    handlePhotoFile(e.target.files[0]);
+    e.target.value = '';
+  });
+});
+
+function renderPhotoView() {
+  const photos = loadPhotos();
+  const thisWeek = getWeekKey();
+  const current = photos[thisWeek];
+
+  // This week's hero
+  const hero = document.getElementById('photoHero');
+  const empty = document.getElementById('photoEmpty');
+
+  // Remove old dynamic elements
+  hero.querySelectorAll('.photo-week-badge,.photo-weight-badge,.photo-main-img').forEach(el => el.remove());
+
+  if (current) {
+    if (empty) empty.style.display = 'none';
+    const img = document.createElement('img');
+    img.className = 'photo-main-img';
+    img.src = current.dataUrl;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;';
+    img.onclick = () => openLightbox(thisWeek);
+    hero.appendChild(img);
+
+    const wBadge = document.createElement('div');
+    wBadge.className = 'photo-week-badge';
+    wBadge.textContent = 'This week · ' + weekLabel(thisWeek);
+    hero.appendChild(wBadge);
+
+    if (current.weight) {
+      const wtBadge = document.createElement('div');
+      wtBadge.className = 'photo-weight-badge';
+      wtBadge.textContent = current.weight.toFixed(1) + ' kg';
+      hero.appendChild(wtBadge);
+    }
+  } else {
+    if (empty) empty.style.display = 'flex';
+  }
+
+  // Timeline — all weeks sorted newest first, excluding this week
+  const allWeeks = Object.keys(photos).sort().reverse();
+  const pastWeeks = allWeeks.filter(w => w !== thisWeek);
+
+  const header = document.getElementById('timelineHeader');
+  const grid = document.getElementById('timelineGrid');
+  grid.innerHTML = '';
+
+  if (!pastWeeks.length && !current) {
+    header.textContent = 'Take your first photo above to start the timeline.';
+    header.style.color = 'var(--muted2)';
+    return;
+  }
+
+  header.textContent = pastWeeks.length ? 'Previous weeks' : 'Your journey starts here';
+  header.style.color = '';
+
+  // Build weight delta lookup
+  const weightsByWeek = {};
+  allWeeks.forEach(w => { if (photos[w].weight) weightsByWeek[w] = photos[w].weight; });
+  const sortedWeeks = [...allWeeks].sort();
+
+  pastWeeks.forEach((wk, idx) => {
+    const p = photos[wk];
+    const cell = document.createElement('div');
+    cell.className = 'timeline-cell';
+
+    // Weight delta vs previous recorded week
+    const wkIdx = sortedWeeks.indexOf(wk);
+    let deltaHtml = '';
+    if (p.weight) {
+      // find previous week with weight
+      let prevWt = null;
+      for (let i = wkIdx - 1; i >= 0; i--) {
+        const pw = sortedWeeks[i];
+        if (photos[pw] && photos[pw].weight) { prevWt = photos[pw].weight; break; }
+      }
+      if (prevWt !== null) {
+        const d = p.weight - prevWt;
+        const cls = d < -0.1 ? 'delta-down' : d > 0.1 ? 'delta-up' : 'delta-same';
+        const sign = d < 0 ? '▼' : d > 0 ? '▲' : '–';
+        deltaHtml = `<div class="timeline-delta ${cls}">${sign} ${Math.abs(d).toFixed(1)} kg</div>`;
+      }
+    }
+
+    cell.innerHTML = `
+      ${p.dataUrl
+        ? `<img class="timeline-thumb" src="${p.dataUrl}" alt="Week photo">`
+        : `<div class="timeline-thumb-empty">🤳</div>`}
+      <div class="timeline-meta">
+        <div class="timeline-week">${weekLabel(wk)}</div>
+        ${p.weight ? `<div class="timeline-wt">${p.weight.toFixed(1)} kg</div>` : ''}
+        ${deltaHtml}
+      </div>
+    `;
+    cell.onclick = () => openLightbox(wk);
+    grid.appendChild(cell);
+  });
+}
+
+// Lightbox
+let lightboxWeekKey = null;
+
+function openLightbox(wk) {
+  const photos = loadPhotos();
+  const p = photos[wk];
+  if (!p) return;
+  lightboxWeekKey = wk;
+  document.getElementById('lightboxImg').src = p.dataUrl;
+  document.getElementById('lightboxWeek').textContent = weekLabel(wk);
+  document.getElementById('lightboxDetail').textContent = p.weight ? `Weight: ${p.weight.toFixed(1)} kg` : '';
+  document.getElementById('lightboxDel').onclick = () => deletePhoto(wk);
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox')) return;
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+function deletePhoto(wk) {
+  if (!confirm('Delete this photo? This cannot be undone.')) return;
+  const photos = loadPhotos();
+  delete photos[wk];
+  savePhotos(photos);
+  document.getElementById('lightbox').classList.remove('open');
+  renderPhotoView();
+  toast('Photo deleted');
+}
+
+// ── History view ─────────────────────────────────────────────────
+function buildHistory() {
+  const data = load();
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const k = dayKey(d);
+    const td = data[k] || { events: [], rings: {} };
+    const rings = td.rings || {};
+    const stretchAM = !!rings['stretch_am'];
+    const stretchPM = !!rings['stretch_pm'];
+    const exCount   = Object.values(rings).filter(Boolean).length;
+    const weight    = td.weight || null;
+    days.push({
+      label: d.toLocaleDateString('en-NZ', { weekday: 'short' }).slice(0,1),
+      exCount, stretchAM, stretchPM, weight,
+      isToday: i === 0
+    });
+  }
+
+  const chart = document.getElementById('weekChart');
+  chart.innerHTML = '';
+  days.forEach(d => {
+    const col = document.createElement('div');
+    col.className = 'week-col';
+    const exH = Math.min(40, d.exCount * 8);
+    col.innerHTML = `
+      <div class="week-day-label" style="color:${d.isToday ? 'var(--orange)' : ''}">${d.label}</div>
+      <div class="week-bars">
+        ${exH ? `<div class="week-bar" style="height:${exH}px;background:var(--green);opacity:0.7"></div>` : '<div class="week-bar" style="height:4px;background:rgba(0,0,0,0.06)"></div>'}
+      </div>
+      <div class="week-score" style="font-size:8px;margin-top:2px">
+        ${d.stretchAM ? '🌅' : ''}${d.stretchPM ? '🌙' : ''}
+      </div>
+    `;
+    chart.appendChild(col);
+  });
+
+  // Insights
+  const totalEx      = days.reduce((s,d) => s + (d.exCount > 0 ? 1 : 0), 0);
+  const stretchAMDays = days.filter(d => d.stretchAM).length;
+  const stretchPMDays = days.filter(d => d.stretchPM).length;
+  const weightDays   = days.filter(d => d.weight).length;
+  const weights      = days.filter(d => d.weight).map(d => d.weight);
+  const weightTrend  = weights.length >= 2
+    ? (weights[weights.length - 1] - weights[0]).toFixed(1)
+    : null;
+
+  document.getElementById('insight1').innerHTML = `
+    <div class="insight-stat">${totalEx}/7</div>
+    <div class="insight-header">Active days this week</div>
+    <div class="insight-body">
+      Stretch AM: ${stretchAMDays}/7 days &nbsp;·&nbsp; Stretch PM: ${stretchPMDays}/7 days.<br>
+      ${stretchAMDays >= 5 && stretchPMDays >= 5
+        ? 'Excellent stretch consistency — this is protecting your hips and back.'
+        : stretchAMDays < 3 || stretchPMDays < 3
+          ? 'Stretching is the key daily indicator — aim for both AM and PM every day.'
+          : 'Good stretching habit building — keep pushing toward daily consistency.'}
+    </div>
+  `;
+  document.getElementById('insight2').innerHTML = `
+    <div class="insight-header">Weight this week</div>
+    <div class="insight-body" style="font-size:13px;color:var(--text)">
+      ${weightDays === 0
+        ? 'No weight logged this week — log daily on the Today tab to see your trend.'
+        : weightTrend !== null
+          ? `${weightDays} readings logged. ${parseFloat(weightTrend) < 0 ? `Down ${Math.abs(weightTrend)} kg — on track.` : parseFloat(weightTrend) === 0 ? 'Holding steady this week.' : `Up ${weightTrend} kg — check eating window and post-shift habits.`}`
+          : `${weightDays} weight reading this week. Log daily to see your trend.`}
+    </div>
+  `;
+}
+
+// ── Tab navigation ───────────────────────────────────────────────
+function showTab(view, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.vtog-btn').forEach(b => b.classList.remove('active'));
+
+  const allViews = ['todayView','mindView','weightView','eatplanView','dashView','postshiftView','fastView','diveView'];
+  allViews.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+
+  const labels = {
+    today: "Today's log", weight: "Weight tracker",
+    eatplan: "Eating plan & menu", dash: "Progress Dashboard",
+    fast: "Religious fast", dive: "Health Notes"
+  };
+  const labelEl = document.getElementById('logSectionLabel');
+  if (labelEl) labelEl.textContent = labels[view] || '';
+  if (view === 'today') {
+    document.getElementById('todayView').style.display = 'block';
+    renderWeek();
+  } else if (view === 'weight') {
+    document.getElementById('weightView').style.display = 'block';
+    initWeightTab();
+  } else if (view === 'dash') {
+    document.getElementById('dashView').style.display = 'block';
+    renderHabits();
+    renderDashboard();
+    initPeakFlow();
+  } else if (view === 'eatplan') {
+    document.getElementById('eatplanView').style.display = 'block';
+  } else if (view === 'postshift') {
+    document.getElementById('postshiftView').style.display = 'block';
+    renderEveningModeLog();
+  } else if (view === 'fast') {
+    document.getElementById('fastView').style.display = 'block';
+    updateFastTimer();
+    renderFastHistory();
+    if (loadFastData().active) {
+      if (fastInterval) clearInterval(fastInterval);
+      fastInterval = setInterval(updateFastTimer, 60000);
+    }
+  } else if (view === 'dive') {
+    document.getElementById('diveView').style.display = 'block';
+    applyGp();
+    showBackupInfo();
+  } else if (view === 'mind') {
+    document.getElementById('mindView').style.display = 'block';
+    renderMind();
+  }
+  window.scrollTo(0, 0);
+}
+
+// Keep setView as alias for backwards compat with any inline onclick calls
+function setView(view, btn) { showTab(view, btn); }
+
+// ── Toast ────────────────────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── Mind tab ─────────────────────────────────────────────────────
+const MIND_QUOTES = [
+  "The ocean doesn't reward hesitation — neither does the life you want. One step today.",
+  "You named the pattern. That's harder than most people ever get. Now act on it.",
+  "Bright lines beat willpower. The trigger food you don't buy can't tempt you at midnight.",
+  "Poor sleep is the upstream problem. Guard it like you guard your air supply.",
+  "Avoidance always costs more than the thing being avoided. Make the call.",
+  "73 kilograms isn't a number — it's a version of you who dives until 75.",
+  "The procrastination ends with one concrete act. One person. One message. That's all.",
+  "Identity first. Behaviour follows. You are someone who takes care of himself — act like it.",
+  "One more video is never one more video. The algorithm is designed to prevent that.",
+  "The permanence isn't built all at once. You make it true today. Then tomorrow.",
+];
+
+function initMindTab() {
+  // Quote
+  const qi = new Date().getDate() % MIND_QUOTES.length;
+  const qEl = document.getElementById('mindQuote');
+  if (qEl) qEl.textContent = MIND_QUOTES[qi];
+
+  // Sleep slider
+  const { data, key } = getTodayData();
+  const td = data[key];
+  const sl = document.getElementById('mindSleepSlider');
+  const sv = document.getElementById('mindSleepVal');
+  if (sl && td.sleepHrs) { sl.value = td.sleepHrs; if (sv) sv.textContent = td.sleepHrs + ' hrs'; }
+
+  // Star ratings
+  buildMindStars('mindSleepStars', 5, '⭐', td.sleepQuality, (val) => saveTodayField('sleepQuality', val));
+  buildMindStars('mindStressStars', 5, '🔴', td.stressLevel, (val) => saveTodayField('stressLevel', val));
+
+  // Notes
+  const ta = document.getElementById('mindNotesTA');
+  if (ta && td.mindNotes) ta.value = td.mindNotes;
+
+  // Weight
+  updateMindWeight();
+}
+
+function buildMindStars(containerId, max, emoji, current, onChange) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 1; i <= max; i++) {
+    const btn = document.createElement('button');
+    btn.style.cssText = 'font-size:24px;background:none;border:none;cursor:pointer;opacity:' + (current && i <= current ? '1' : '0.25') + ';transition:opacity 0.15s';
+    btn.textContent = emoji;
+    btn.onclick = function() {
+      const val = i;
+      onChange(val);
+      container.querySelectorAll('button').forEach((b, idx) => {
+        b.style.opacity = idx < val ? '1' : '0.25';
+      });
+    };
+    container.appendChild(btn);
+  }
+}
+
+function saveMindLog() {
+  const ta = document.getElementById('mindNotesTA');
+  if (ta) saveTodayField('mindNotes', ta.value);
+  refreshDashStats();
+  toast('Wellness log saved ✓');
+}
+
+function saveMindWeight() {
+  const val = parseFloat(document.getElementById('mindWeightInput').value);
+  if (!val || val < 50 || val > 150) { toast('Enter a valid weight'); return; }
+  const { data, key } = getTodayData();
+  data[key].weight = val;
+  save(data);
+  updateMindWeight();
+  updateWeightBar(val);
+  refreshDashStats();
+  toast(`Weight saved: ${val} kg`);
+}
+
+function getLatestWeight() {
+  try {
+    const arr = JSON.parse(localStorage.getItem('oscar_weight_v1')) || [];
+    return arr.length ? arr[arr.length - 1].reading : START_W;
+  } catch { return START_W; }
+}
+
+function updateMindWeight() {
+  const { data, key } = getTodayData();
+  const w = data[key].weight || getLatestWeight();
+  const pct = Math.max(0, Math.min(100, ((START_W - w) / (START_W - GOAL_W)) * 100));
+  const wEl = document.getElementById('mindWeight');
+  const bEl = document.getElementById('mindWeightBar');
+  const pEl = document.getElementById('mindWeightPct');
+  const kEl = document.getElementById('mindKgToGo');
+  if (wEl) wEl.textContent = w.toFixed(1);
+  if (bEl) bEl.style.width = pct + '%';
+  if (pEl) pEl.textContent = pct.toFixed(0) + '%';
+  if (kEl) kEl.textContent = Math.max(0, w - 73).toFixed(1) + ' kg';
+}
+
+
 
 // ── Weight tracker ───────────────────────────────────────────────
 const WT_KEY = 'oscar_weight_v1';
@@ -2645,7 +3503,7 @@ function saveWTData(arr) { localStorage.setItem(WT_KEY, JSON.stringify(arr)); }
 
 function initWeightTab() {
   const dateEl = document.getElementById('wtDate');
-  if (dateEl && !dateEl.value) dateEl.value = new Date().toISOString().slice(0,10);
+  if (dateEl && !dateEl.value) dateEl.value = dayKey();
   renderWTHistory();
 }
 
@@ -2731,6 +3589,7 @@ function renderWTHistory() {
       </div>
     </div>
     ${trend !== null ? `<div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:10px">Since last reading: ${trendHtml}</div>` : ''}
+    ${weeklyAvgHtml(arr)}
     <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:0.3px">All readings</div>
     ${[...arr].reverse().map(r => {
       const d = new Date(r.date).toLocaleDateString('en-NZ', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
@@ -2829,7 +3688,7 @@ function savePFData(arr) { localStorage.setItem(PF_KEY, JSON.stringify(arr)); }
 function initPeakFlow() {
   // Default date to today
   const dateEl = document.getElementById('pfDate');
-  if (dateEl && !dateEl.value) dateEl.value = new Date().toISOString().slice(0,10);
+  if (dateEl && !dateEl.value) dateEl.value = dayKey();
   renderPFHistory();
 }
 
@@ -2998,13 +3857,333 @@ function drawPFChart(arr) {
   ctx.fillText('L/min', 0, pad.t + 8);
 }
 
+
+// ── GP visit list (persists until ticked off) ────────────────────
+const GP_KEY = 'oscar_gp_v1';
+const GP_IDS = ['hba1c','acr','predict','psa','vacc','symb','hip','bili','mind'];
+function loadGp() { try { return JSON.parse(localStorage.getItem(GP_KEY)) || {}; } catch (e) { return {}; } }
+function toggleGp(id) {
+  const g = loadGp();
+  g[id] = !g[id];
+  try { localStorage.setItem(GP_KEY, JSON.stringify(g)); } catch (e) {}
+  applyGp();
+}
+function applyGp() {
+  const g = loadGp();
+  GP_IDS.forEach(function(id) {
+    const row = document.getElementById('cl_gp_' + id);
+    if (row) row.classList.toggle('cl-done', !!g[id]);
+  });
+}
+
+// ── Mind check-in ────────────────────────────────────────────────
+const MIND_FIELDS = { mood: 'mindMood', energy: 'mindEnergy', sleep: 'mindSleep', comfort: 'mindComfort', tv: 'mindTv' };
+function setMind(field, val) {
+  const { data, key } = getTodayData();
+  if (!data[key].mind) data[key].mind = {};
+  data[key].mind[field] = (data[key].mind[field] === val) ? null : val;
+  save(data);
+  renderMind();
+  applyChecklistState();
+}
+function toggleSign(k) {
+  const { data, key } = getTodayData();
+  if (!data[key].mind) data[key].mind = {};
+  const sg = data[key].mind.signs || {};
+  sg[k] = !sg[k];
+  data[key].mind.signs = sg;
+  save(data);
+  renderMind();
+}
+function saveMindGood() {
+  const el = document.getElementById('mindGood');
+  const { data, key } = getTodayData();
+  if (!data[key].mind) data[key].mind = {};
+  data[key].mind.good = el ? el.value.trim() : '';
+  save(data);
+  toast('Saved');
+}
+function renderMind() {
+  const all = load();
+  const today = (all[dayKey()] && all[dayKey()].mind) || {};
+  Object.keys(MIND_FIELDS).forEach(function(f) {
+    const wrap = document.getElementById(MIND_FIELDS[f]);
+    if (!wrap) return;
+    wrap.querySelectorAll('button').forEach(function(b, i) {
+      b.classList.toggle('on', today[f] === i + 1);
+    });
+  });
+  document.querySelectorAll('.sign-btn').forEach(function(b) {
+    const k = b.id.replace('sign_', '');
+    b.classList.toggle('on', !!(today.signs && today.signs[k]));
+  });
+  const good = document.getElementById('mindGood');
+  if (good && document.activeElement !== good) good.value = today.good || '';
+
+  // 14-day grid
+  const days = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const k = dayKey(d);
+    days.push({ d: d, m: (all[k] && all[k].mind) || {} });
+  }
+  const rows = [['Mood','mood'],['Energy','energy'],['Sleep','sleep']];
+  let html = '';
+  rows.forEach(function(r) {
+    html += '<div class="mind-grid"><div>' + r[0] + '</div>';
+    days.forEach(function(x) {
+      const v = x.m[r[1]];
+      html += '<div class="mind-cell' + (v ? ' mind-c' + v : '') + '"></div>';
+    });
+    html += '</div>';
+  });
+  html += '<div class="mind-grid"><div></div>';
+  days.forEach(function(x, i) {
+    html += '<div style="text-align:center">' + ((i === 0 || i === 13 || x.d.getDay() === 1) ? x.d.getDate() : '') + '</div>';
+  });
+  html += '</div>';
+  const h = document.getElementById('mindHistory');
+  if (h) h.innerHTML = html;
+
+  // Signals from the last 7 days
+  const last7 = days.slice(7).map(function(x) { return x.m; });
+  const lowMood = last7.filter(function(m) { return m.mood && m.mood <= 2; }).length;
+  const lowSleep = last7.filter(function(m) { return m.sleep && m.sleep <= 2; }).length;
+  const logged = last7.filter(function(m) { return m.mood; }).length;
+  const comfort = last7.filter(function(m) { return m.comfort && m.comfort >= 2; });
+  const comfortLow = comfort.filter(function(m) { return (m.mood && m.mood <= 2) || (m.sleep && m.sleep <= 2); }).length;
+  let sig = '';
+  if (lowMood >= 3) {
+    sig += '<div class="hn-note" style="margin-top:10px"><strong style="color:var(--orange)">Low mood on ' + lowMood + ' of the last 7 days.</strong> That is worth acting on, not pushing through. Reach out to someone this week, and raise it with Dr Johnston. 1737 is free to call or text any time.</div>';
+  }
+  if (lowSleep >= 3) {
+    sig += '<div class="hn-note" style="margin-top:10px"><strong style="color:var(--orange)">5 hours or less on ' + lowSleep + ' of the last 7 nights.</strong> Short sleep drives hunger, low mood and poorer breathing. See the sleep tips below.</div>';
+  }
+  const signDays = last7.filter(function(m) { return m.signs && Object.keys(m.signs).filter(function(k) { return m.signs[k]; }).length >= 2; }).length;
+  if (signDays >= 3) {
+    sig += '<div class="hn-note" style="margin-top:10px"><strong style="color:var(--orange)">Your warning signs showed up on ' + signDays + ' of the last 7 days.</strong> This is your early alarm, before the weight moves. Pick up the guitar for 10 minutes, have one real conversation, and get the morning block done tomorrow. If it lasts another week, talk to Dr Johnston or call 1737.</div>';
+  }
+  if (comfort.length >= 3) {
+    sig += '<div class="hn-note" style="margin-top:10px"><strong style="color:var(--orange)">Comfort eating on ' + comfort.length + ' of the last 7 days' + (comfortLow ? ', ' + comfortLow + ' of them on a low-mood or short-sleep day' : '') + '.</strong> This is usually what undoes a good fortnight, not the gym. Fix the feeling first: water, wait 20 minutes, call someone, or get some sleep.</div>';
+  }
+  if (!sig) {
+    sig = '<div class="hn-small">' + (logged ? 'Logged ' + logged + ' of the last 7 days. Nothing to flag.' : 'Start logging to see your patterns here.') + '</div>';
+  }
+  const s = document.getElementById('mindSignal');
+  if (s) s.innerHTML = sig;
+}
+
+// ── Backup and restore ───────────────────────────────────────────
+function backupData() {
+  const out = { app: 'oscar-wellness', saved: new Date().toISOString(), data: {} };
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.indexOf('oscar_') === 0) out.data[k] = localStorage.getItem(k);
+  }
+  const blob = new Blob([JSON.stringify(out)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'oscar-wellness-backup-' + dayKey() + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  try { localStorage.setItem('oscar_lastbackup', dayKey()); } catch (e) {}
+  showBackupInfo();
+  toast('Backup saved');
+}
+function restoreData(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function() {
+    try {
+      const obj = JSON.parse(reader.result);
+      if (!obj || obj.app !== 'oscar-wellness' || !obj.data) throw new Error('bad');
+      if (!confirm('Restore backup from ' + String(obj.saved).slice(0, 10) + '? This replaces what is on this phone.')) return;
+      Object.keys(obj.data).forEach(function(k) { localStorage.setItem(k, obj.data[k]); });
+      location.reload();
+    } catch (e) { toast('That file is not a wellness backup'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+function showBackupInfo() {
+  const el = document.getElementById('backupInfo');
+  if (!el) return;
+  let last = null;
+  try { last = localStorage.getItem('oscar_lastbackup'); } catch (e) {}
+  el.textContent = last ? 'Last backup: ' + last : 'No backup yet.';
+}
+
+
+// ── Weekly targets (Today tab) ───────────────────────────────────
+const WEEK_TARGETS = [
+  { label: 'Circuit', match: ['ARMA Circuit'], target: 2 },
+  { label: 'Spin', match: ['Spin Class'], target: 2 },
+  { label: 'Walk or swim', match: ['Walk', 'Pool swim', 'Park Run'], target: 3 },
+  { label: 'Morning block', check: 'core_morning', target: 7 }
+];
+function renderWeek() {
+  const el = document.getElementById('weekTargets');
+  if (!el) return;
+  const all = load();
+  const now = new Date();
+  const monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const keys = [];
+  for (let i = 0; i < 7; i++) { const d = new Date(monday); d.setDate(monday.getDate() + i); keys.push(dayKey(d)); }
+  let html = '';
+  WEEK_TARGETS.forEach(function(t) {
+    let n = 0;
+    keys.forEach(function(k) {
+      const day = all[k]; if (!day) return;
+      if (t.check) { if (day.checks && day.checks[t.check]) n++; }
+      else { n += (day.events || []).filter(function(e) { return e.type === 'exercise' && t.match.indexOf(e.exType) >= 0; }).length; }
+    });
+    const pct = Math.min(100, n / t.target * 100);
+    const col = n >= t.target ? 'var(--green)' : 'var(--orange)';
+    html += '<div style="display:grid;grid-template-columns:96px 1fr 34px;gap:8px;align-items:center;margin-bottom:6px;font-size:12px">' +
+      '<div style="font-weight:600">' + t.label + '</div>' +
+      '<div style="height:8px;background:rgba(0,0,0,0.08);border-radius:4px;overflow:hidden"><div style="height:100%;width:' + pct + '%;background:' + col + '"></div></div>' +
+      '<div style="text-align:right;font-weight:700;color:' + col + '">' + n + '/' + t.target + '</div></div>';
+  });
+  el.innerHTML = html;
+}
+
+// ── Weight: 7-day averages ───────────────────────────────────────
+function weeklyAvgHtml(arr) {
+  const now = new Date(); now.setHours(23, 59, 59);
+  const day = 86400000;
+  function avg(fromDays, toDays) {
+    const r = arr.filter(function(x) { const age = (now - new Date(x.date)) / day; return age >= fromDays && age < toDays; });
+    if (!r.length) return null;
+    return r.reduce(function(a, x) { return a + x.reading; }, 0) / r.length;
+  }
+  const a = avg(0, 7), b = avg(7, 14);
+  if (a === null) return '';
+  let diff = '';
+  if (b !== null) {
+    const d = a - b;
+    diff = Math.abs(d) < 0.3 ? '<span style="color:var(--green)">holding steady</span>'
+      : d < 0 ? '<span style="color:var(--green)">down ' + Math.abs(d).toFixed(1) + ' kg on last week</span>'
+      : '<span style="color:var(--amber)">up ' + d.toFixed(1) + ' kg on last week</span>';
+  }
+  const ce = catchItEarly();
+  const warn = (ce && ce.up >= 1.5) ? '<div class="hn-note" style="margin-bottom:12px;border-color:var(--red)"><strong style="color:var(--red)">Catch it early: up ' + ce.up.toFixed(1) + ' kg</strong> from your recent low of ' + ce.low.toFixed(1) + '. Act this week, before it becomes 5 kg.</div>' : '';
+  return warn + '<div style="text-align:center;font-size:13px;margin-bottom:12px;background:var(--surface2);border-radius:8px;padding:8px">' +
+    '7-day average <strong>' + a.toFixed(1) + ' kg</strong>' + (diff ? ' · ' + diff : '') + '</div>';
+}
+
+
+// ── Urge log (Eat tab) ───────────────────────────────────────────
+let urgeFeeling = null;
+function pickFeel(f) {
+  urgeFeeling = (urgeFeeling === f) ? null : f;
+  document.querySelectorAll('#urgeFeel button').forEach(function(b) {
+    b.classList.toggle('on', b.textContent.toLowerCase() === urgeFeeling);
+  });
+}
+function logUrge(outcome) {
+  const { data, key } = getTodayData();
+  const h = new Date().getHours();
+  data[key].events.push({ type: 'urge', outcome: outcome, feeling: urgeFeeling, hour: h, time: nowTime() });
+  save(data);
+  urgeFeeling = null; pickFeel(null);
+  toast(outcome === 'passed' ? 'Well done. That counts.' : 'Logged. One evening, not the whole battle.');
+  renderUrgeToday();
+}
+function renderUrgeToday() {
+  const el = document.getElementById('urgeToday'); if (!el) return;
+  const { data, key } = getTodayData();
+  const u = (data[key].events || []).filter(function(e) { return e.type === 'urge'; });
+  if (!u.length) { el.textContent = ''; return; }
+  const p = u.filter(function(e) { return e.outcome === 'passed'; }).length;
+  el.textContent = 'Today: ' + p + ' of ' + u.length + ' urges passed.';
+}
+
+// ── 20% habits dashboard (Progress tab) ──────────────────────────
+function weekDays(offsetWeeks) {
+  const base = new Date(Date.now() - 3 * 3600000);
+  const mon = new Date(base); mon.setDate(base.getDate() - ((base.getDay() + 6) % 7) - 7 * offsetWeeks);
+  const out = [];
+  for (let i = 0; i < 7; i++) { const d = new Date(mon); d.setDate(mon.getDate() + i); out.push(d); }
+  return out;
+}
+function habitScores(offsetWeeks) {
+  const all = load();
+  const days = weekDays(offsetWeeks);
+  const todayK = dayKey();
+  const keys = days.map(function(d) { return dayKey(d); }).filter(function(k) { return k <= todayK; });
+  const n = keys.length || 1;
+  const wt = loadWT();
+  const weighs = wt.filter(function(r) { return keys.indexOf(r.date) >= 0; }).length;
+  let move = 0, eat = 0, tvHrs = 0, tvDays = 0, urges = 0, passed = 0, connect = 0, checkins = 0;
+  const feelings = {};
+  keys.forEach(function(k) {
+    const d = all[k] || {}; const c = d.checks || {}; const ev = d.events || []; const m = d.mind || {};
+    if (c.exercise || ev.some(function(e) { return e.type === 'exercise'; })) move++;
+    if (c.core_eat) eat++;
+    if (m.tv) { tvHrs += [0, 0.5, 1.5, 2.5, 4][m.tv]; tvDays++; }
+    ev.forEach(function(e) { if (e.type === 'urge') { urges++; if (e.outcome === 'passed') passed++; if (e.feeling) feelings[e.feeling] = (feelings[e.feeling] || 0) + 1; } });
+    if (c.core_connect) connect++;
+    if (m.mood) checkins++;
+  });
+  const tvWeek = tvDays ? tvHrs / tvDays * 7 : null;
+  let topFeel = null; Object.keys(feelings).forEach(function(f) { if (!topFeel || feelings[f] > feelings[topFeel]) topFeel = f; });
+  return { n: n, weighs: weighs, move: move, eat: eat, tvWeek: tvWeek, urges: urges, passed: passed, connect: connect, checkins: checkins, topFeel: topFeel };
+}
+function catchItEarly() {
+  const arr = loadWT(); if (arr.length < 3) return null;
+  const now = Date.now(), day = 86400000;
+  function avgBetween(a, b) {
+    const r = arr.filter(function(x) { const age = (now - new Date(x.date)) / day; return age >= a && age < b; });
+    return r.length ? r.reduce(function(s, x) { return s + x.reading; }, 0) / r.length : null;
+  }
+  const cur = avgBetween(0, 7); if (cur === null) return null;
+  let low = cur;
+  for (let w = 1; w < 6; w++) { const a = avgBetween(w * 7, w * 7 + 7); if (a !== null && a < low) low = a; }
+  return { cur: cur, low: low, up: cur - low };
+}
+function renderHabits() {
+  const el = document.getElementById('habitsDash'); if (!el) return;
+  const t = habitScores(0), l = habitScores(1);
+  const G = 'var(--green)', A = 'var(--amber)', R = 'var(--red)';
+  function col(v, good, ok) { return v >= good ? G : v >= ok ? A : R; }
+  const tvTxt = t.tvWeek === null ? '–' : Math.round(t.tvWeek) + 'h';
+  const tvCol = t.tvWeek === null ? 'var(--muted2)' : t.tvWeek <= 10 ? G : t.tvWeek <= 15 ? A : R;
+  const urgeCol = t.urges === 0 ? 'var(--muted2)' : col(t.passed / t.urges, 0.6, 0.3);
+  const rows = [
+    ['Weigh often', 'Weigh-ins this week. Catch small gains early.', t.weighs + '/5', col(t.weighs, Math.min(5, t.n), 3)],
+    ['Move most days', 'Days with exercise or a walk.', t.move + '/' + t.n, col(t.move / t.n, 0.7, 0.5)],
+    ['Eat the same every day', 'Days the eating window was kept.', t.eat + '/' + t.n, col(t.eat / t.n, 0.85, 0.6)],
+    ['Low TV', 'Estimated hours this week. Keepers average under 10.', tvTxt, tvCol],
+    ['Plan for slips', t.urges ? 'Urges that passed, from the Eat tab.' : 'Use "When the urge hits" on the Eat tab.', t.urges ? t.passed + '/' + t.urges : '–', urgeCol],
+    ['Deal with feelings', 'Days with a real conversation.' + (t.topFeel ? ' Main trigger this week: ' + t.topFeel + '.' : ''), t.connect + '/' + t.n, col(t.connect / t.n, 0.7, 0.4)]
+  ];
+  const onTrack = rows.filter(function(r) { return r[3] === G; }).length;
+  let html = '<div class="hn-card"><div style="display:flex;justify-content:space-between;align-items:baseline">' +
+    '<div style="font-size:16px;font-weight:800">The keepers\' 6 habits</div>' +
+    '<div style="font-size:22px;font-weight:800;color:' + (onTrack >= 4 ? G : onTrack >= 2 ? A : R) + '">' + onTrack + '/6</div></div>' +
+    '<div class="hn-small" style="margin-top:2px">What people who keep weight off do every week. This week so far, Mon to Sun.</div>';
+  rows.forEach(function(r) {
+    html += '<div class="hb-row"><div class="hb-dot" style="background:' + r[3] + '"></div><div><div class="hb-name">' + r[0] + '</div><div class="hb-sub">' + r[1] + '</div></div><div class="hb-val" style="color:' + r[3] + '">' + r[2] + '</div></div>';
+  });
+  html += '<div class="hn-small">Last week: move ' + l.move + '/7 · eating window ' + l.eat + '/7 · conversations ' + l.connect + '/7' + (l.tvWeek !== null ? ' · TV ' + Math.round(l.tvWeek) + 'h' : '') + '</div>';
+  const c = catchItEarly();
+  if (c && c.up >= 1.5) {
+    html += '<div class="hn-note" style="margin-top:10px;border-color:var(--red)"><strong style="color:var(--red)">Catch it early: up ' + c.up.toFixed(1) + ' kg</strong> from your lowest weekly average in the last 6 weeks (' + c.low.toFixed(1) + ' → ' + c.cur.toFixed(1) + '). Act this week: keep the eating window every day, log every urge, and have one real conversation a day.</div>';
+  } else if (c) {
+    html += '<div class="hn-small" style="color:var(--green)">Weight check: 7-day average ' + c.cur.toFixed(1) + ' kg, within 1.5 kg of your recent low. Holding counts.</div>';
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
 // ── Init ─────────────────────────────────────────────────────────
 function init() {
   const now = new Date();
   document.getElementById('hdrDay').textContent =
     now.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long' });
 
-  const allViews = ['todayView','weightView','eatplanView','dashView','postshiftView','fastView','diveView'];
+  // Ensure correct panel visibility on load
+  const allViews = ['todayView','mindView','weightView','eatplanView','dashView','postshiftView','fastView','diveView'];
   allViews.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
   document.getElementById('todayView').style.display = 'block';
 
@@ -3013,7 +4192,10 @@ function init() {
   renderChecklist();
   updateStreak();
   renderLog();
-
+  applyGp();
+  renderWeek();
+  renderUrgeToday();
+  // Resume fast timer if one is active
   if (loadFastData().active) {
     updateFastTimer();
     fastInterval = setInterval(updateFastTimer, 60000);
