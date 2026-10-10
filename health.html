@@ -1704,6 +1704,15 @@ body::before { display: none; }
     </div>
   </div>
 
+  <!-- Dry fast safety -->
+  <div class="hn-card" style="font-size:12px;line-height:1.65;margin-top:12px">
+    <div class="hn-label" style="margin-top:0">FIRST SUNDAY · 24 HOURS, NO FOOD OR WATER</div>
+    <div class="hn-row">Drink well the day before, more than usual.</div>
+    <div class="hn-row">Stand up slowly. Your prostate tablet (tamsulosin) can make you dizzy, and more so when you are dry.</div>
+    <div class="hn-row">Ask your GP how to take your tablets on a fast day, especially Celebrex, which is harder on the kidneys when you are dehydrated.</div>
+    <div class="hn-row" style="border:none"><strong>Break the fast</strong> if you feel dizzy, faint, confused or unwell, or need your reliever more than usual.</div>
+  </div>
+
   <!-- Fast history -->
   <div class="fast-history">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -1760,6 +1769,7 @@ body::before { display: none; }
       <div class="cl-row" id="cl_gp_symb" onclick="toggleGp('symb')"><div class="cl-text"><div class="cl-label">New Symbicort prescription</div><div class="cl-sub">One repeat left at Chemist Warehouse Riccarton.</div></div><div class="cl-tick"></div></div>
       <div class="cl-row" id="cl_gp_hip" onclick="toggleGp('hip')"><div class="cl-text"><div class="cl-label">Hip and Celebrex</div><div class="cl-sub">Nothing has happened with the ortho referral since Jan. Is Celebrex every day OK long term for your kidneys and blood pressure?</div></div><div class="cl-tick"></div></div>
       <div class="cl-row" id="cl_gp_bili" onclick="toggleGp('bili')"><div class="cl-text"><div class="cl-label">Bilirubin 24 (slightly high)</div><div class="cl-sub">Rest of liver tests normal. Often harmless (Gilbert's). Worth a one-line check.</div></div><div class="cl-tick"></div></div>
+      <div class="cl-row" id="cl_gp_fast" onclick="toggleGp('fast')"><div class="cl-text"><div class="cl-label">Tablets on a fast day</div><div class="cl-sub">You fast 24 hours without food or water the first Sunday each month. How should you take Celebrex, tamsulosin and your inhalers that day?</div></div><div class="cl-tick"></div></div>
       <div class="cl-row" id="cl_gp_mind" onclick="toggleGp('mind')"><div class="cl-text"><div class="cl-label">Sleep and mood</div><div class="cl-sub">Mention it if your Mind tab shows a run of low days or poor sleep.</div></div><div class="cl-tick"></div></div>
     </div>
 
@@ -3906,7 +3916,7 @@ function drawPFChart(arr) {
 
 // ── GP visit list (persists until ticked off) ────────────────────
 const GP_KEY = 'oscar_gp_v1';
-const GP_IDS = ['hba1c','acr','predict','psa','vacc','symb','hip','bili','mind'];
+const GP_IDS = ['hba1c','acr','predict','psa','vacc','symb','hip','bili','fast','mind'];
 function loadGp() { try { return JSON.parse(localStorage.getItem(GP_KEY)) || {}; } catch (e) { return {}; } }
 function toggleGp(id) {
   const g = loadGp();
