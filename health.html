@@ -181,6 +181,8 @@ body::before { display: none; }
 .cl-label { font-size: 13px; font-weight: 600; color: var(--text); }
 .cl-row.cl-done .cl-label { color: var(--green); text-decoration: line-through; opacity: 0.7; }
 .cl-sub { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+.cl-row.cl-rest { opacity: 0.45; }
+.cl-row.cl-rest .cl-label::after { content: ' · Sunday rest'; font-weight: 600; color: var(--blue); }
 .cl-why { font-size: 10px; color: var(--blue); margin-top: 3px; line-height: 1.3; font-style: italic; }
 .cl-tick {
   width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
@@ -2011,22 +2013,31 @@ function getTodayData() { return getDay(dayKey()); }
 const CORE_IDS = ['core_meds','core_morning','core_eat','core_connect','core_evening'];
 const CL_IDS = CORE_IDS.concat(['exercise','guitar','foundation','mindlog']);
 const STREAK_MILESTONES = [[7,'One week. The habit is starting to set.'],[14,'Two weeks. This is now part of who you are.'],[30,'A month. Most people never get here.'],[66,'66 days. Research says this is when a habit becomes automatic.'],[100,'100 days. Remarkable.']];
-function isCoreDone(td) { return !!(td && td.checks && CORE_IDS.every(function(id) { return td.checks[id]; })); }
+// Sunday is a rest day (Sabbath): no morning exercise block, and Sundays don't count against movement targets.
+function isSundayKey(k) { const p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]).getDay() === 0; }
+function coreIdsFor(k) { return isSundayKey(k) ? CORE_IDS.filter(function(id) { return id !== 'core_morning'; }) : CORE_IDS; }
+function isCoreDone(td, k) { const ids = coreIdsFor(k); return !!(td && td.checks && ids.every(function(id) { return td.checks[id]; })); }
 
 function applyChecklistState() {
   const { data, key } = getTodayData();
   const checks = data[key].checks || {};
   checks.mindlog = !!(data[key].mind && data[key].mind.mood);
-  const total = CORE_IDS.length;
-  const done  = CORE_IDS.filter(id => checks[id]).length;
+  const ids = coreIdsFor(key);
+  const sunday = ids.length < CORE_IDS.length;
+  const total = ids.length;
+  const done  = ids.filter(id => checks[id]).length;
+  const mr = document.getElementById('cl_core_morning');
+  if (mr) mr.classList.toggle('cl-rest', sunday);
+  const ex = document.getElementById('cl_exercise');
+  if (ex) ex.classList.toggle('cl-rest', sunday);
 
   // Update subtitle
   const sub = document.getElementById('checklistSubtitle');
   if (sub) {
     if (done === total) {
-      sub.innerHTML = '<span style="color:var(--green);font-weight:700">All 5 done. Today counts.</span>';
+      sub.innerHTML = '<span style="color:var(--green);font-weight:700">All ' + total + ' done. Today counts.</span>';
     } else {
-      sub.textContent = done + ' of 5 done. Do these 5 and the day counts.';
+      sub.textContent = (sunday ? 'Sunday rest day: no exercise. ' : '') + done + ' of ' + total + ' done. Do these ' + total + ' and the day counts.';
     }
   }
 
@@ -2075,7 +2086,7 @@ function updateStreak() {
     const d = new Date(base); d.setDate(base.getDate() - i);
     const k = dayKey(d);
     if (k < first) break;
-    if (isCoreDone(data[k])) { streak++; continue; }
+    if (isCoreDone(data[k], k)) { streak++; continue; }
     if (k === todayK) continue;
     const wk = getWeekKey(d);
     if (!passUsed[wk]) { passUsed[wk] = k; continue; }
@@ -2092,7 +2103,7 @@ function updateStreak() {
   const thisWeekPass = passUsed[getWeekKey(base)];
   let next = null, msg = '';
   STREAK_MILESTONES.forEach(function(m) { if (streak >= m[0]) msg = m[1]; else if (!next) next = m[0]; });
-  const doneToday = isCoreDone(data[todayK]);
+  const doneToday = isCoreDone(data[todayK], todayK);
   card.innerHTML =
     '<div style="display:flex;align-items:center;gap:14px">' +
       '<div style="text-align:center;min-width:64px"><div style="font-size:34px;font-weight:800;color:var(--orange);line-height:1">' + streak + '</div><div style="font-size:10px;color:var(--muted)">day streak</div></div>' +
@@ -4029,7 +4040,7 @@ const WEEK_TARGETS = [
   { label: 'Circuit', match: ['ARMA Circuit'], target: 2 },
   { label: 'Spin', match: ['Spin Class'], target: 2 },
   { label: 'Walk or swim', match: ['Walk', 'Pool swim', 'Park Run'], target: 3 },
-  { label: 'Morning block', check: 'core_morning', target: 7 }
+  { label: 'Morning block', check: 'core_morning', target: 6 }
 ];
 function renderWeek() {
   const el = document.getElementById('weekTargets');
@@ -4122,6 +4133,7 @@ function habitScores(offsetWeeks) {
   const todayK = dayKey();
   const keys = days.map(function(d) { return dayKey(d); }).filter(function(k) { return k <= todayK; });
   const n = keys.length || 1;
+  const nMove = keys.filter(function(k) { return !isSundayKey(k); }).length || 1;
   const wt = loadWT();
   const weighs = wt.filter(function(r) { return keys.indexOf(r.date) >= 0; }).length;
   let move = 0, eat = 0, tvHrs = 0, tvDays = 0, urges = 0, passed = 0, connect = 0, checkins = 0;
@@ -4137,7 +4149,7 @@ function habitScores(offsetWeeks) {
   });
   const tvWeek = tvDays ? tvHrs / tvDays * 7 : null;
   let topFeel = null; Object.keys(feelings).forEach(function(f) { if (!topFeel || feelings[f] > feelings[topFeel]) topFeel = f; });
-  return { n: n, weighs: weighs, move: move, eat: eat, tvWeek: tvWeek, urges: urges, passed: passed, connect: connect, checkins: checkins, topFeel: topFeel };
+  return { n: n, nMove: nMove, weighs: weighs, move: move, eat: eat, tvWeek: tvWeek, urges: urges, passed: passed, connect: connect, checkins: checkins, topFeel: topFeel };
 }
 function catchItEarly() {
   const arr = loadWT(); if (arr.length < 3) return null;
@@ -4159,7 +4171,7 @@ function habitRows(t) {
   const urgeCol = t.urges === 0 ? 'var(--muted2)' : col(t.passed / t.urges, 0.6, 0.3);
   const rows = [
     ['Weigh often', 'Weigh-ins this week. Catch small gains early.', t.weighs + '/5', col(t.weighs, Math.min(5, t.n), 3)],
-    ['Move most days', 'Days with exercise or a walk.', t.move + '/' + t.n, col(t.move / t.n, 0.7, 0.5)],
+    ['Move most days', 'Days with exercise or a walk. Sunday is rest.', t.move + '/' + t.nMove, col(t.move / t.nMove, 0.7, 0.5)],
     ['Eat the same every day', 'Days the eating window was kept.', t.eat + '/' + t.n, col(t.eat / t.n, 0.85, 0.6)],
     ['Low TV', 'Estimated hours this week. Keepers average under 10.', tvTxt, tvCol],
     ['Plan for slips', t.urges ? 'Urges that passed, from the Eat tab.' : 'Use "When the urge hits" on the Eat tab.', t.urges ? t.passed + '/' + t.urges : '–', urgeCol],
@@ -4181,7 +4193,7 @@ function renderHabits() {
   rows.forEach(function(r) {
     html += '<div class="hb-row"><div class="hb-dot" style="background:' + r[3] + '"></div><div><div class="hb-name">' + r[0] + '</div><div class="hb-sub">' + r[1] + '</div></div><div class="hb-val" style="color:' + r[3] + '">' + r[2] + '</div></div>';
   });
-  html += '<div class="hn-small">Last week: move ' + l.move + '/7 · eating window ' + l.eat + '/7 · conversations ' + l.connect + '/7' + (l.tvWeek !== null ? ' · TV ' + Math.round(l.tvWeek) + 'h' : '') + '</div>';
+  html += '<div class="hn-small">Last week: move ' + l.move + '/6 · eating window ' + l.eat + '/7 · conversations ' + l.connect + '/7' + (l.tvWeek !== null ? ' · TV ' + Math.round(l.tvWeek) + 'h' : '') + '</div>';
   const c = catchItEarly();
   if (c && c.up >= 1.5) {
     html += '<div class="hn-note" style="margin-top:10px;border-color:var(--red)"><strong style="color:var(--red)">Catch it early: up ' + c.up.toFixed(1) + ' kg</strong> from your lowest weekly average in the last 6 weeks (' + c.low.toFixed(1) + ' → ' + c.cur.toFixed(1) + '). Act this week: keep the eating window every day, log every urge, and have one real conversation a day.</div>';
@@ -4230,7 +4242,8 @@ function renderStatus() {
   const hCol = habits >= 4 ? 'var(--green)' : habits >= 2 ? 'var(--amber)' : 'var(--red)';
   const mt = moodTrend();
   const td = (load()[dayKey()] || {}).checks || {};
-  const coreDone = CORE_IDS.filter(function(id) { return td[id]; }).length;
+  const todayIds = coreIdsFor(dayKey());
+  const coreDone = todayIds.filter(function(id) { return td[id]; }).length;
   function tile(label, val, col, sub, tab) {
     return '<div class="st-tile" onclick="showTab(\'' + tab + '\', document.querySelectorAll(\'.tab-btn\')[' + ({ weight: 2, dash: 4, mind: 1, today: 0 })[tab] + '])">' +
       '<div class="st-val" style="color:' + col + '">' + val + '</div><div class="st-lbl">' + label + '</div>' + (sub ? '<div class="st-sub">' + sub + '</div>' : '') + '</div>';
@@ -4239,7 +4252,7 @@ function renderStatus() {
     tile('Zone', zoneTxt, zoneCol, next, 'weight') +
     tile('Habits', habits + '/6', hCol, 'this week', 'dash') +
     tile('Mood', mt.label + mt.arrow, mt.col, '7 days', 'mind') +
-    tile('Today', coreDone + '/5', coreDone === 5 ? 'var(--green)' : 'var(--orange)', 'must-dos', 'today') +
+    tile('Today', coreDone + '/' + todayIds.length, coreDone === todayIds.length ? 'var(--green)' : 'var(--orange)', 'must-dos', 'today') +
     '</div>';
   if (zone) html += '<div class="st-plan" style="border-color:' + zoneCol + '"><strong style="color:' + zoneCol + '">' + zoneTxt + ' zone.</strong> ' + ZONE_PLANS[zone] + '</div>';
   if (mt.label === 'Low') html += '<div class="st-plan" style="border-color:var(--red)"><strong style="color:var(--red)">Mood has been low this week.</strong> Talk to someone today. 1737 is free to call or text, any time.</div>';
