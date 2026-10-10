@@ -183,6 +183,12 @@ body::before { display: none; }
 .cl-sub { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
 .cl-row.cl-rest { opacity: 0.45; }
 .cl-row.cl-rest .cl-label::after { content: ' · Sunday rest'; font-weight: 600; color: var(--blue); }
+.m30-grid { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; }
+.m30-dot { aspect-ratio: 1; border-radius: 50%; background: rgba(0,0,0,0.08); }
+.m30-dot.ok { background: var(--green); }
+.m30-dot.open { background: transparent; border: 2px dashed var(--orange); }
+.m30-dot.sun:not(.ok):not(.open) { background: rgba(26,111,168,0.18); }
+.m30-msg { font-size: 12px; margin-top: 8px; line-height: 1.4; }
 .cl-why { font-size: 10px; color: var(--blue); margin-top: 3px; line-height: 1.3; font-style: italic; }
 .cl-tick {
   width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
@@ -1108,7 +1114,7 @@ body::before { display: none; }
   </div>
   <div class="hdr-streak">
     <div class="streak-num" id="streakNum">0</div>
-    <div class="streak-label">day streak</div>
+    <div class="streak-label">of last 30 days</div>
   </div>
 </div>
 
@@ -2095,25 +2101,44 @@ function updateStreak() {
   let best = 0;
   try { best = parseInt(localStorage.getItem('oscar_beststreak') || '0', 10) || 0; } catch (e) {}
   if (streak > best) { best = streak; try { localStorage.setItem('oscar_beststreak', String(best)); } catch (e) {} }
+  // Days done in the last 30 (excluding today while it is still open) and this calendar year.
+  let last30 = 0, yearTotal = 0, dots = '';
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(base); d.setDate(base.getDate() - i);
+    const k = dayKey(d);
+    const ok = isCoreDone(data[k], k);
+    if (ok) last30++;
+    const open = (k === todayK && !ok);
+    dots += '<div class="m30-dot' + (ok ? ' ok' : open ? ' open' : '') + (isSundayKey(k) ? ' sun' : '') + '"></div>';
+  }
+  const yr = todayK.slice(0, 4);
+  keys.forEach(function(k) { if (k.slice(0, 4) === yr && isCoreDone(data[k], k)) yearTotal++; });
+  const yd = new Date(base); yd.setDate(base.getDate() - 1);
+  const yK = dayKey(yd);
+  const yesterdayMissed = yK >= first && !isCoreDone(data[yK], yK);
+  const doneToday = isCoreDone(data[todayK], todayK);
+
   const el = document.getElementById('streakNum');
-  if (el) el.textContent = streak;
+  if (el) el.textContent = last30;
 
   const card = document.getElementById('streakCard');
   if (!card) return;
-  const thisWeekPass = passUsed[getWeekKey(base)];
-  let next = null, msg = '';
-  STREAK_MILESTONES.forEach(function(m) { if (streak >= m[0]) msg = m[1]; else if (!next) next = m[0]; });
-  const doneToday = isCoreDone(data[todayK], todayK);
+  let msg = '';
+  if (doneToday && yesterdayMissed) {
+    msg = '<div class="m30-msg" style="color:var(--green)"><strong>Comeback day.</strong> Getting back on track after a miss is the skill that matters most.</div>';
+  } else if (!doneToday && yesterdayMissed) {
+    msg = '<div class="m30-msg" style="color:var(--amber)"><strong>Never miss twice.</strong> Yesterday slipped, and that is fine. Today is the one that counts.</div>';
+  } else if (doneToday) {
+    msg = '<div class="m30-msg" style="color:var(--green)"><strong>Today counts.</strong></div>';
+  }
   card.innerHTML =
-    '<div style="display:flex;align-items:center;gap:14px">' +
-      '<div style="text-align:center;min-width:64px"><div style="font-size:34px;font-weight:800;color:var(--orange);line-height:1">' + streak + '</div><div style="font-size:10px;color:var(--muted)">day streak</div></div>' +
-      '<div style="flex:1;font-size:12px;line-height:1.5;color:var(--muted)">' +
-        (msg ? '<div style="color:var(--green);font-weight:700">' + msg + '</div>' : '') +
-        (next ? '<div>' + (next - streak) + ' more day' + (next - streak === 1 ? '' : 's') + ' to ' + next + '.</div>' : '') +
-        '<div>Free pass this week: ' + (thisWeekPass ? '<strong style="color:var(--amber)">used</strong>' : '<strong style="color:var(--green)">available</strong>') + ' · Best: ' + best + '</div>' +
-        (doneToday ? '' : '<div style="margin-top:2px">Today is still open.</div>') +
-      '</div>' +
-    '</div>';
+    '<div style="display:flex;align-items:flex-end;gap:12px;margin-bottom:8px">' +
+      '<div style="font-size:40px;font-weight:800;color:var(--orange);line-height:1">' + last30 + '</div>' +
+      '<div style="font-size:12px;color:var(--muted);line-height:1.35;padding-bottom:3px"><strong style="color:var(--text)">of the last 30 days</strong><br>' + yearTotal + ' days done in ' + yr + '. This number never goes down.</div>' +
+    '</div>' +
+    '<div class="m30-grid">' + dots + '</div>' +
+    msg +
+    '<div style="font-size:11px;color:var(--muted2);margin-top:6px">Current run: ' + streak + ' day' + (streak === 1 ? '' : 's') + ' · Best run: ' + best + '</div>';
 }
 
 // ── Event log ────────────────────────────────────────────────────
