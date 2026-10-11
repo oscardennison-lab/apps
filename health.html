@@ -1861,7 +1861,9 @@ body::before { display: none; }
       <div class="hn-row"><strong>Bowel</strong> · FIT screening 12 Nov 2025 <span style="color:var(--green)">negative</span>. Next kit arrives about Nov 2027. Past polyps (2019) were benign.</div>
       <div class="hn-row"><strong>Skin</strong> · MoleMap 1 Oct 2026: 3 spots checked, <span style="color:var(--green)">all benign</span>, including the one on your right sole. Next check Oct 2027.</div>
       <div class="hn-row"><strong>Eyes and hearing</strong> · Specsavers Aug 2026: reading glasses only, hearing fine.</div>
-      <div class="hn-row"><strong>Teeth</strong> · Crown fitted at Palms 9 Oct 2026. Denture appointment 12 Oct, 11am.</div>
+      <div class="hn-row"><strong>Teeth</strong> · Crown fitted at Palms 9 Oct 2026. Dentures Plus 12 Oct: gums receding, so no new Valplast and no implant. The plan is daily gum care plus a hygienist every 6 months.
+        <div style="margin-top:6px;font-size:12px">Last hygienist visit: <input class="modal-input" type="date" id="hygDate" onchange="saveHyg(this.value)" style="font-size:13px;padding:6px 8px;width:auto;display:inline-block"></div>
+        <div id="hygNext" style="margin-top:4px;font-size:12px;color:var(--muted)"></div></div>
       <div class="hn-row" style="border:none"><strong>Flu vaccine</strong> · done for 2026. Next due about Mar 2027.</div>
     </div>
 
@@ -4288,8 +4290,36 @@ function renderStatus() {
     tile('Today', coreDone + '/' + todayIds.length, coreDone === todayIds.length ? 'var(--green)' : 'var(--orange)', 'must-dos', 'today') +
     '</div>';
   if (zone) html += '<div class="st-plan" style="border-color:' + zoneCol + '"><strong style="color:' + zoneCol + '">' + zoneTxt + ' zone.</strong> ' + ZONE_PLANS[zone] + '</div>';
+  const hyg = hygDue();
+  if (hyg && hyg.days <= 21) html += '<div class="st-plan" style="border-color:var(--amber)"><strong style="color:var(--amber)">Hygienist ' + (hyg.days < 0 ? 'overdue' : 'due ' + hyg.due.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short' })) + '.</strong> Ring The Palms to book, then update the date in Health Notes after your visit.</div>';
   if (mt.label === 'Low') html += '<div class="st-plan" style="border-color:var(--red)"><strong style="color:var(--red)">Mood has been low this week.</strong> Talk to someone today. 1737 is free to call or text, any time.</div>';
   el.innerHTML = html;
+}
+
+// ── Hygienist every 6 months (Health Notes date, Today banner when due) ──
+const HYG_KEY = 'oscar_hygienist_v1';
+function hygDue() {
+  let last = null;
+  try { last = localStorage.getItem(HYG_KEY); } catch (e) {}
+  if (!last) return null;
+  const d = new Date(last + 'T12:00:00');
+  if (isNaN(d)) return null;
+  d.setMonth(d.getMonth() + 6);
+  const days = Math.ceil((d - new Date()) / 86400000);
+  return { last: last, due: d, days: days };
+}
+function saveHyg(v) {
+  try { if (v) localStorage.setItem(HYG_KEY, v); else localStorage.removeItem(HYG_KEY); } catch (e) {}
+  renderHyg(); renderStatus();
+}
+function renderHyg() {
+  const inp = document.getElementById('hygDate'), el = document.getElementById('hygNext');
+  if (!inp || !el) return;
+  const h = hygDue();
+  inp.value = h ? h.last : '';
+  if (!h) { el.textContent = 'Put in the date of your last visit and the app will remind you on Today 3 weeks before the next one is due.'; return; }
+  const ds = h.due.toLocaleDateString('en-NZ', { day: 'numeric', month: 'short', year: 'numeric' });
+  el.innerHTML = 'Next due: <strong style="color:' + (h.days < 0 ? 'var(--red)' : h.days <= 21 ? 'var(--amber)' : 'var(--green)') + '">' + ds + '</strong>. After each visit, change the date above.';
 }
 
 // ── Init ─────────────────────────────────────────────────────────
@@ -4311,6 +4341,7 @@ function init() {
   applyGp();
   renderWeek();
   renderUrgeToday();
+  renderHyg();
   renderStatus();
   // Resume fast timer if one is active
   if (loadFastData().active) {
