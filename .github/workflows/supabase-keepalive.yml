@@ -1,0 +1,23 @@
+# Reads one row from the Pūtea Shift Log's Supabase table each day so the
+# free-tier project isn't paused for inactivity. Read-only: it never writes.
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: "17 20 * * *"  # daily, about 9am NZ time
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read one shift from Supabase
+        run: |
+          URL=$(grep -oP "SUPABASE_URL = '\K[^']+" putea-shift-log.html)
+          KEY=$(grep -oP "SUPABASE_KEY = '\K[^']+" putea-shift-log.html)
+          code=$(curl -sS -o body.json -w '%{http_code}' \
+            "$URL/rest/v1/shifts?select=date&order=date.desc&limit=1" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
+          echo "HTTP $code"; cat body.json; echo
+          test "$code" = 200
