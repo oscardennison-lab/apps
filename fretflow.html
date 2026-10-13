@@ -266,9 +266,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
     <div class="stat-card"><div class="stat-val" id="stat-best">0</div><div class="stat-lbl">best streak</div></div>
   </div>
   <div class="current-song">
-    <div class="cs-label">Current song</div>
-    <div class="cs-title" id="cs-title">Pick a song to start</div>
-    <div class="cs-artist" id="cs-artist">Go to the Songs tab</div>
+    <div class="cs-label">Current focus</div>
+    <div class="cs-title" id="cs-title">5 Pentatonic Shapes</div>
+    <div class="cs-artist" id="cs-artist">All positions · A minor</div>
     <div class="prog-track"><div class="prog-fill" id="cs-prog" style="width:0%"></div></div>
     <div class="prog-pct" id="cs-pct">0% complete</div>
   </div>
@@ -383,7 +383,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
   </div>
   <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:0%"></div></div>
   <div style="padding:0 16px;margin-bottom:16px"><div class="card" id="task-list-card"></div></div>
-  <div style="padding:0 16px"><button class="ghost-btn" style="width:100%" onclick="askCoach('Give me a fresh 30-minute guitar practice plan for today. I can play open chords, I am working on pentatonic scales and barre chords, and I want to play full songs.')">Refresh plan ↗</button></div>
+  <div style="padding:0 16px"><button class="ghost-btn" style="width:100%" onclick="askCoach('Give me a fresh 30-minute guitar practice plan for today. My three gaps are: learning all 5 pentatonic shapes, memorising all major and minor barre chords on the Low E and A strings, and knowing the notes on the fretboard instantly.')">Refresh plan ↗</button></div>
 </div>
 
 <!-- COACH -->
@@ -392,14 +392,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
   <div class="coach-msgs" id="coach-msgs">
     <div class="chat-msg">
       <div class="chat-who">Coach</div>
-      <div class="bubble ai">Hey! You've got solid foundations — open chords down, pentatonic scales and barre chords in progress. The goal now is getting through full songs. What are you working on today?</div>
+      <div class="bubble ai">Hey! You've got open chords down solid. Your three gaps right now are the 5 pentatonic shapes, major and minor barre chords on the Low E and A strings, and knowing all the fretboard notes instantly. Pick one and let's work on it.</div>
     </div>
   </div>
   <div class="quick-chips">
-    <div class="chip" onclick="quickAsk('Why does my F barre chord buzz so much?')">F chord buzzing</div>
-    <div class="chip" onclick="quickAsk('Best songs to learn with G C D and Em?')">Song ideas</div>
-    <div class="chip" onclick="quickAsk('How do I keep rhythm steady while changing chords?')">Rhythm tips</div>
-    <div class="chip" onclick="quickAsk('How do I connect pentatonic scale across the neck?')">Scale tips</div>
+    <div class="chip" onclick="quickAsk('How do I memorise all 5 pentatonic shapes without getting them confused?')">5 penta shapes</div>
+    <div class="chip" onclick="quickAsk('What is the fastest way to learn all the notes on the Low E and A strings?')">Fretboard notes</div>
+    <div class="chip" onclick="quickAsk('Why does my barre chord buzz and how do I fix it?')">Barre buzz fix</div>
+    <div class="chip" onclick="quickAsk('How do I connect pentatonic shapes across the whole neck to solo freely?')">Linking shapes</div>
   </div>
   <div class="chat-bar">
     <input class="chat-input" type="text" id="chat-in" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()">
@@ -719,6 +719,7 @@ const A_ROOT=[
   {name:"Bb",fret:1},{name:"B",fret:2},{name:"C",fret:3},{name:"C#",fret:4},
   {name:"D",fret:5},{name:"Eb",fret:6},{name:"E",fret:7},{name:"F",fret:8},
 ];
+
 const PATTERNS={
   basic:{label:"Basic 4/4",beats:["D","D","D","D"],lbls:["1","2","3","4"]},
   ballad:{label:"Ballad",beats:["D","—","U","—","D","D","U","—"],lbls:["1","+","2","+","3","+","4","+"]},
@@ -726,14 +727,18 @@ const PATTERNS={
   rock:{label:"Rock",beats:["D","—","D","U","—","U","D","U"],lbls:["1","+","2","+","3","+","4","+"]},
 };
 const TIPS=[
-  "Slow practice is fast learning. If a chord change feels rushed, halve the tempo and build back up.",
-  "Before you strum, make sure every string rings clean. Fix the buzz before you add rhythm.",
-  "The G → D transition is one of the most common in pop music. Loop it for 3 minutes today.",
-  "Keep your strumming hand moving even on rests — consistency comes from the arm, not the wrist.",
-  "Barre chord tip: roll your index finger slightly onto its bony edge for a cleaner press.",
-  "Record a 30-second clip of yourself once a week. The progress will surprise you.",
-  "The pentatonic scale works over almost any chord. Try playing it slowly over a backing track.",
-  "Chord changes get smoother when your fingers move as a unit, not one at a time.",
+  "Pentatonic tip: learn where the root notes are in each shape first — they're your anchor when you solo.",
+  "Barre chord tip: roll your index finger slightly toward the nut so the bony edge presses the strings — less flesh, less buzz.",
+  "To memorise the Low E string: the open strings E–A–D–G–B–e repeat every 12 frets. Fret 5 Low E = A, fret 7 = B, fret 12 = E again.",
+  "Link your pentatonic shapes: the last two notes of Shape 1 are the first two notes of Shape 2 on the next string up.",
+  "Barre chord shortcut: the note on the Low E string names any E-shape barre chord. The note on the A string names any A-shape chord.",
+  "Slow practice is fast learning. Run each pentatonic shape at 60 BPM before you speed up.",
+  "The A string: A (open) → B (fret 2) → C (fret 3) → D (fret 5) → E (fret 7). Say the names as you play them.",
+  "Minor barre chords use the same root as majors — same fret, same string — just a different shape. One shape, two moods.",
+  "Record yourself playing a pentatonic shape once a week. After a month the progress will surprise you.",
+  "Shape 5 connects back to Shape 1 — it ends right where Shape 1 begins at fret 5. That join closes the loop across the whole neck.",
+  "Every note on the Low E string also appears on the high e string at the same fret. Learn one, you know both.",
+  "Barre chords: don't squeeze harder — position your thumb lower on the back of the neck and let the geometry do the work.",
 ];
 const NOTES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const STR_OPEN=['E','B','G','D','A','E'];
@@ -744,11 +749,11 @@ const PENTA_AM=new Set(['A','C','D','E','G']);
 const ALL_ROOTS=['E','F','F#','G','G#','A','Bb','B','C','C#','D','Eb'];
 
 let state={streak:0,bestStreak:0,totalSessions:0,songsStarted:0,todayMins:0,currentSong:0,songProgress:[15,0,0,0,0,0,0,0],week:[false,false,false,false,false,false,false],tasks:[
-  {label:"Warm up — spider exercise",dur:"5 min",done:false},
-  {label:"Chord changes: G → C → D at 60 BPM",dur:"7 min",done:false},
-  {label:"Pentatonic scale — positions 1 and 2",dur:"7 min",done:false},
-  {label:"Verse of Knockin' on Heaven's Door",dur:"8 min",done:false},
-  {label:"Free jam over a backing track",dur:"3 min",done:false},
+  {label:"Warm up — spider exercise up and down all strings",dur:"5 min",done:false},
+  {label:"Pentatonic shapes — run shapes 1 and 2 up and down, then link them",dur:"8 min",done:false},
+  {label:"Barre chords — E shape majors and minors, frets 1–7",dur:"7 min",done:false},
+  {label:"Note finder game — Low E string only, naturals",dur:"5 min",done:false},
+  {label:"Free jam — pick any pentatonic shape and improvise over a backing track",dur:"5 min",done:false},
 ]};
 let curPat='basic',metroInt=null,curBeat=-1,bpm=70,fbMode='all',fbRoot=null,chatHistory=[];
 
@@ -1096,7 +1101,7 @@ async function sendChat(){
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-6',max_tokens:1000,
-        system:`You are a friendly, practical guitar coach. The student has played guitar for 3-4 years, knows open chords well, is learning pentatonic scales and barre chords, and wants to play full songs all the way through. Their current song is "${SONGS[state.currentSong].title}". Keep answers concise, warm, and actionable. Plain text only — no markdown, no asterisks, no bullet symbols.`,
+        system:`You are a friendly, practical guitar coach. The student is working through a course focused on becoming a technically proficient rhythm guitarist. Their three current gaps are: (1) memorising all 5 pentatonic scale shapes and connecting them across the neck, (2) learning all major and minor barre chords on the Low E and A strings, and (3) memorising all the notes on the fretboard so they can find any note instantly. The course does not teach specific songs — it teaches chord progressions, licks, and scale-based soloing. Keep answers concise, warm, and actionable. Plain text only — no markdown, no asterisks, no bullet symbols.`,
         messages:chatHistory
       })
     });
