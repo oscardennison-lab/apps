@@ -520,6 +520,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
 <div class="panel" id="p-plan">
   <!-- MODULE SELECT -->
   <div id="pview-modules">
+    <div id="daily-plan"></div>
     <div style="padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between">
       <div>
         <div style="font-size:22px;font-weight:600;color:var(--text);letter-spacing:-0.3px">Modules</div>
@@ -2457,7 +2458,129 @@ function toggleTheoryCard(id){
 }
 
 function renderPlan(){
+  renderDailyPlan();
   renderModules();
+}
+
+// ── DAILY 30-MINUTE PLAN ──────────────────────────────────
+// Shape of the week and barre focus persist; ticks reset each day.
+const BARRE_FOCUS=[
+  {key:'E',label:'E and Em shapes',root:'Low E',major:'E shape',minor:'Em shape'},
+  {key:'A',label:'A and Am shapes',root:'A string',major:'A shape',minor:'Am shape'},
+];
+let daily={shape:1,barre:'E',shapeSince:null,barreSince:null,date:null,done:[false,false,false,false,false],weeklyTest:null};
+function todayStr(){const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+function daysSince(ds){if(!ds)return 0;const [y,m,d]=ds.split('-').map(Number);return Math.floor((new Date().setHours(0,0,0,0)-new Date(y,m-1,d).getTime())/86400000);}
+function loadDaily(){
+  try{const s=localStorage.getItem('fretflow_daily');if(s)daily={...daily,...JSON.parse(s)};}catch(e){}
+  const t=todayStr();
+  if(!daily.shapeSince)daily.shapeSince=t;
+  if(!daily.barreSince)daily.barreSince=t;
+  if(daily.date!==t){daily.date=t;daily.done=[false,false,false,false,false];saveDaily();}
+}
+function saveDaily(){try{localStorage.setItem('fretflow_daily',JSON.stringify(daily));}catch(e){}}
+
+function dailyTasks(){
+  const sh=daily.shape, bf=BARRE_FOCUS.find(b=>b.key===daily.barre);
+  const shapeText=sh===1?'Shape 1':`Shape ${sh}, then join it to Shape ${sh-1}`;
+  return [
+    {mins:5,title:'Root notes',desc:`Note Finder on the ${bf.root==='Low E'?'Low E':'A'} string. Say each note aloud as you find it.`,go:'roots'},
+    {mins:10,title:`Pentatonic — ${shapeText}`,desc:'Up and down slowly at 60 BPM, saying every note name. Eyes closed once it feels solid.',go:'shape'},
+    {mins:8,title:`Barre chords — ${bf.label}`,desc:`Move the ${bf.major} and ${bf.minor} up the neck, naming the root on the ${bf.root} each time. Finish with 2 min in the Trainer.`,go:'barre'},
+    {mins:5,title:'Improvise',desc:`Use only ${sh===1?'Shape 1':'Shapes 1–'+sh} over an A minor backing track. Start and end on A.`,go:'shape'},
+    {mins:2,title:'Test Me',desc:'One theory quiz round.',go:'quiz'},
+  ];
+}
+
+function goPanel(id){
+  const btn=[...document.querySelectorAll('.nav-btn')].find(b=>(b.getAttribute('onclick')||'').includes(`'${id}'`));
+  showPanel(id,btn);
+}
+function dailyGo(where){
+  if(where==='roots'){
+    goPanel('game');
+    const v=daily.barre==='E'?'E6':'A';
+    const b=[...document.querySelectorAll('.game-settings .fb-btn')].find(x=>(x.getAttribute('onclick')||'').includes(`'${v}'`));
+    if(b)setGameStr(v,b);
+  } else if(where==='shape'){
+    goPanel('penta');
+    const i=daily.shape-1, card=document.getElementById('psh-'+i), tip=document.getElementById('penta-tip-'+i);
+    if(card){if(tip&&tip.style.display==='none')togglePentaShape(i);card.scrollIntoView({block:'start'});}
+  } else if(where==='barre'){
+    goPanel('chords');
+    const b=[...document.querySelectorAll('#p-chords .filter-tab')].find(x=>(x.getAttribute('onclick')||'').includes("'barre'"));
+    if(b)switchChordView('barre',b);
+    const g=document.getElementById(daily.barre==='E'?'e-root-grid':'a-root-grid');
+    if(g)g.parentElement.scrollIntoView({block:'start'});
+  } else if(where==='quiz'){
+    goPanel('theory');
+    switchTheoryTab('quiz');
+  }
+}
+function toggleDaily(i){
+  daily.done[i]=!daily.done[i];saveDaily();
+  if(daily.done.every(Boolean)){
+    state.todayMins=Math.max(state.todayMins,30);
+    if(!state._sessionToday){state.streak++;state.bestStreak=Math.max(state.bestStreak,state.streak);state.totalSessions++;state._sessionToday=true;}
+    const wd=(new Date().getDay()+6)%7; if(state.week)state.week[wd]=true;
+    save();
+  }
+  renderDailyPlan();
+}
+function setDailyShape(n){if(n!==daily.shape){daily.shape=n;daily.shapeSince=todayStr();saveDaily();}renderDailyPlan();}
+function setDailyBarre(k){if(k!==daily.barre){daily.barre=k;daily.barreSince=todayStr();saveDaily();}renderDailyPlan();}
+function nextDailyShape(){if(daily.shape<5)setDailyShape(daily.shape+1);}
+function markWeeklyTest(){daily.weeklyTest=todayStr();saveDaily();renderDailyPlan();}
+
+function renderDailyPlan(){
+  const el=document.getElementById('daily-plan'); if(!el)return;
+  const tasks=dailyTasks(), doneCount=daily.done.filter(Boolean).length;
+  const doneMins=tasks.reduce((a,t,i)=>a+(daily.done[i]?t.mins:0),0);
+  const shapeDays=daysSince(daily.shapeSince), barreDays=daysSince(daily.barreSince);
+  const testDays=daily.weeklyTest?daysSince(daily.weeklyTest):null;
+  const testDue=testDays===null||testDays>=7;
+  const pill=(on,label,fn)=>`<button class="fb-btn${on?' on':''}" onclick="${fn}">${label}</button>`;
+  el.innerHTML=`
+  <div style="padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between">
+    <div>
+      <div style="font-size:22px;font-weight:600;color:var(--text);letter-spacing:-0.3px">Today's 30 minutes</div>
+      <div style="font-size:15px;color:var(--text2);margin-top:3px">Shapes · roots · barre chords</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:20px;font-weight:700;color:var(--green)">${doneMins}/30</div>
+      <div style="font-size:15px;color:var(--text3)">min</div>
+    </div>
+  </div>
+  <div class="timer-bar"><div class="timer-fill" style="width:${Math.round(doneMins/30*100)}%"></div></div>
+
+  <div style="margin:0 16px 12px" class="card">
+    <div class="section-label">Shape of the week</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${[1,2,3,4,5].map(n=>pill(daily.shape===n,'Shape '+n,`setDailyShape(${n})`)).join('')}</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:${daily.shape<5?'10px':'0'}">Day ${shapeDays+1} on Shape ${daily.shape}. ${shapeDays>=13?'Two weeks in — if you can play it eyes closed and name every note, move on.':'Move on when you can play it eyes closed and name every note.'}</div>
+    ${daily.shape<5?`<button class="ghost-btn" style="width:100%" onclick="nextDailyShape()">I've got Shape ${daily.shape} cold → start Shape ${daily.shape+1}</button>`:''}
+    <div class="section-label" style="margin-top:14px">Barre focus</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${BARRE_FOCUS.map(b=>pill(daily.barre===b.key,b.label,`setDailyBarre('${b.key}')`)).join('')}</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.5">Day ${barreDays+1} on ${BARRE_FOCUS.find(b=>b.key===daily.barre).label}. ${barreDays>=13?'Two weeks done — time to switch.':'Switch after about two weeks.'}</div>
+  </div>
+
+  <div style="padding:0 16px;margin-bottom:12px"><div class="card">
+    ${tasks.map((t,i)=>`
+      <div class="plan-task">
+        <div class="check-circle${daily.done[i]?' done':''}" onclick="toggleDaily(${i})"></div>
+        <div style="flex:1">
+          <div class="task-name">${t.title}</div>
+          <div class="task-dur">${t.mins} min · ${t.desc}</div>
+        </div>
+        <button onclick="dailyGo('${t.go}')" style="flex-shrink:0;padding:6px 12px;border-radius:20px;border:0.5px solid var(--amber);background:var(--amber-dim);color:var(--amber);font-size:13px;cursor:pointer">Open</button>
+      </div>`).join('')}
+  </div></div>
+  <div style="padding:0 16px;margin-bottom:8px;font-size:13px;color:var(--text3);text-align:center">${doneCount===5?'All done — session logged. Great work.':'Slow and correct beats fast and sloppy. Miss a note? Drop 10 BPM.'}</div>
+
+  <div style="margin:0 16px 20px;background:${testDue?'var(--amber-dim)':'var(--bg2)'};border:0.5px solid ${testDue?'var(--amber)':'var(--border)'};border-radius:var(--radius);padding:12px 14px">
+    <div style="font-size:15px;font-weight:600;color:${testDue?'var(--amber)':'var(--text)'};margin-bottom:4px">Weekly self-test ${testDue?'· due':'· done '+(testDays===0?'today':testDays+' day'+(testDays===1?'':'s')+' ago')}</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:10px">Pick a key (say G). Find the root on the Low E and A strings, play the major and minor barre chords, then play Shape 1 in that key.</div>
+    <button class="ghost-btn" style="width:100%" onclick="markWeeklyTest()">${testDue?'Mark this week\'s test done':'Done again today'}</button>
+  </div>`;
 }
 
 
@@ -2819,6 +2942,14 @@ function drawPentaSvg(shape){
   });
   svg+='</svg>';
   return svg;
+}
+
+function togglePentaShape(i){
+  const tip=document.getElementById('penta-tip-'+i), card=document.getElementById('psh-'+i);
+  if(!tip)return;
+  const open=tip.style.display==='none';
+  tip.style.display=open?'block':'none';
+  card.classList.toggle('active-shape',open);
 }
 
 function renderPentaShapes(){
@@ -3335,6 +3466,7 @@ function updateTestProgress(){
 
 // ── INIT — all data defined above, safe to render ──────────
 load();
+loadDaily();
 renderHome();
 renderSongs();
 renderChordGrids();
