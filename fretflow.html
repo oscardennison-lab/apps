@@ -575,6 +575,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
       <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
   </div>
+  <div style="padding:6px 16px 16px;text-align:center;font-size:12px;color:var(--text3)"><a href="#" onclick="setApiKey();return false" style="color:var(--text3)">Set or change API key</a></div>
 </div>
 
 <!-- PENTATONIC -->
@@ -2585,29 +2586,56 @@ function renderDailyPlan(){
 
 
 
+// The Coach calls the Anthropic API straight from the browser. Outside a
+// claude.ai artifact that needs the user's own API key (stored on this device only).
+function getApiKey(){try{return localStorage.getItem('ff_api_key')||'';}catch(e){return '';}}
+function setApiKey(){
+  const k=prompt('Paste your Anthropic API key (from console.anthropic.com). It is saved on this device only.',getApiKey());
+  if(k===null)return false;
+  try{localStorage.setItem('ff_api_key',k.trim());}catch(e){}
+  return !!k.trim();
+}
+
 async function sendChat(){
   const inp=document.getElementById('chat-in');
   const txt=inp.value.trim();
   if(!txt)return;
+  if(!getApiKey()&&!setApiKey()){
+    addMsg('ai','The Coach needs an Anthropic API key to answer. Tap "Set or change API key" below the chat box.');
+    return;
+  }
   inp.value='';
   addMsg('user',txt);
   chatHistory.push({role:'user',content:txt});
   const lid=addMsg('ai','...');
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':getApiKey(),
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
       body:JSON.stringify({
-        model:'claude-sonnet-4-6',max_tokens:1000,
+        model:'claude-sonnet-5-5',max_tokens:1000,
         system:`You are a friendly, practical guitar coach. The student has played guitar for 3-4 years, knows open chords well, is learning pentatonic scales and barre chords, and wants to play full songs all the way through. Their current song is "${SONGS[state.currentSong].title}". Keep answers concise, warm, and actionable. Plain text only — no markdown, no asterisks, no bullet symbols.`,
         messages:chatHistory
       })
     });
     const d=await r.json();
-    const reply=d.content?.[0]?.text||'Something went wrong — try again.';
     document.getElementById(lid)?.remove();
+    if(!r.ok){
+      chatHistory.pop();
+      const msg=d.error?.message||('HTTP '+r.status);
+      addMsg('ai',r.status===401?'Your API key was rejected. Tap "Set or change API key" and paste a valid one.':'The Coach hit an error: '+msg);
+      return;
+    }
+    const reply=d.content?.[0]?.text||'Something went wrong — try again.';
     addMsg('ai',reply);
     chatHistory.push({role:'assistant',content:reply});
   }catch(e){
+    chatHistory.pop();
     document.getElementById(lid)?.remove();
     addMsg('ai','Connection issue. Check your internet and try again.');
   }
