@@ -2552,7 +2552,9 @@ function renderDailyPlan(){
       <div style="font-size:15px;color:var(--text3)">min</div>
     </div>
   </div>
-  <div class="timer-bar"><div class="timer-fill" style="width:${Math.round(doneMins/30*100)}%"></div></div>
+  <div class="timer-bar"><div class="timer-fill" id="dp-bar" style="width:${Math.round(doneMins/30*100)}%"></div></div>
+
+  <div style="margin:0 16px 12px;text-align:center" class="card" id="dp-timer"></div>
 
   <div style="margin:0 16px 12px" class="card">
     <div class="section-label">Shape of the week</div>
@@ -2582,6 +2584,80 @@ function renderDailyPlan(){
     <div style="font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:10px">Pick a key (say G). Find the root on the Low E and A strings, play the major and minor barre chords, then play Shape 1 in that key.</div>
     <button class="ghost-btn" style="width:100%" onclick="markWeeklyTest()">${testDue?'Mark this week\'s test done':'Done again today'}</button>
   </div>`;
+  renderDailyTimer();
+}
+
+// ── DAILY PLAN TIMER ──────────────────────────────────────
+// Counts down the current task, ticks it when time is up and moves to the next.
+// Uses clock time, so it stays right if the phone sleeps or the tab is in the background.
+let dpTimer={task:null,endAt:0,left:0,running:false,int:null};
+function dpFmt(sec){sec=Math.max(0,Math.ceil(sec));return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');}
+function dpNextTask(){return daily.done.findIndex(d=>!d);}
+function dpRemaining(){return dpTimer.running?(dpTimer.endAt-Date.now())/1000:dpTimer.left;}
+function dpBeep(){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    [0,0.25,0.5].forEach(t=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=880;g.gain.setValueAtTime(0.25,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.2);o.connect(g);g.connect(ctx.destination);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+0.2);});
+  }catch(e){}
+  try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}
+}
+function dpStartTask(i){
+  if(i<0)return;
+  const t=dailyTasks()[i];
+  dpTimer.task=i;dpTimer.left=t.mins*60;
+  dpTimer.endAt=Date.now()+dpTimer.left*1000;dpTimer.running=true;
+  dpEnsureTick();renderDailyTimer();
+}
+function dpToggle(){
+  if(dpTimer.running){dpTimer.left=dpRemaining();dpTimer.running=false;}
+  else if(dpTimer.task!==null&&dpTimer.left>0&&!daily.done[dpTimer.task]){dpTimer.endAt=Date.now()+dpTimer.left*1000;dpTimer.running=true;dpEnsureTick();}
+  else{dpStartTask(dpNextTask());return;}
+  renderDailyTimer();
+}
+function dpReset(){dpTimer.running=false;dpTimer.task=null;dpTimer.left=0;renderDailyTimer();}
+function dpFinish(){
+  const i=dpTimer.task;dpTimer.running=false;dpTimer.task=null;dpTimer.left=0;
+  dpBeep();
+  if(i!==null&&!daily.done[i])toggleDaily(i); else renderDailyPlan();
+  const nxt=dpNextTask();
+  if(nxt>=0){dpTimer.task=nxt;dpTimer.left=dailyTasks()[nxt].mins*60;renderDailyTimer();}
+}
+function dpEnsureTick(){
+  if(dpTimer.int)return;
+  dpTimer.int=setInterval(()=>{
+    if(!dpTimer.running){clearInterval(dpTimer.int);dpTimer.int=null;return;}
+    if(dpRemaining()<=0){dpFinish();return;}
+    renderDailyTimer();
+  },500);
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&dpTimer.running){if(dpRemaining()<=0)dpFinish();else renderDailyTimer();}});
+function renderDailyTimer(){
+  const el=document.getElementById('dp-timer'); if(!el)return;
+  const tasks=dailyTasks();
+  // a task ticked by hand while it was being timed stops its countdown
+  if(dpTimer.task!==null&&daily.done[dpTimer.task]){dpTimer.running=false;dpTimer.task=null;dpTimer.left=0;}
+  const nxt=dpNextTask();
+  if(nxt<0&&dpTimer.task===null){
+    el.innerHTML=`<div style="font-size:15px;color:var(--green);font-weight:600">All 30 minutes done today ✓</div>`;
+    return;
+  }
+  const i=dpTimer.task!==null?dpTimer.task:nxt;
+  const t=tasks[i];
+  const left=dpTimer.task!==null?dpRemaining():t.mins*60;
+  const started=dpTimer.task!==null;
+  // live progress: ticked minutes plus time spent on the current task
+  const doneMins=tasks.reduce((a,x,j)=>a+(daily.done[j]?x.mins:0),0);
+  const liveMins=doneMins+(started?(t.mins*60-left)/60:0);
+  const bar=document.getElementById('dp-bar'); if(bar)bar.style.width=Math.min(100,liveMins/30*100)+'%';
+  el.innerHTML=`
+    <div style="font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">${started?'Now':'Up next'} · task ${i+1} of 5</div>
+    <div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px">${t.title}</div>
+    <div class="ptimer-display${dpTimer.running?' running':''}">${dpFmt(left)}</div>
+    <div class="ptimer-btns">
+      <button class="ptimer-start" onclick="dpToggle()">${dpTimer.running?'❚❚ Pause':(started&&left<t.mins*60-1)?'▶ Resume':'▶ Start'}</button>
+      <button class="ptimer-reset" onclick="${started?'dpReset()':`dailyGo('${t.go}')`}">${started?'Reset':'Open'}</button>
+    </div>
+    ${started?`<button class="ghost-btn" style="width:100%;margin-top:8px" onclick="dpFinish()">Done early → next task</button>`:''}`;
 }
 
 
