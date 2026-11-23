@@ -917,6 +917,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
   </div>
 </div>
 
+<!-- 12-MONTH SONG PLAN -->
+<div class="panel" id="p-year">
+  <div class="page-header">
+    <div class="page-title">Sultans of Swing</div>
+    <div class="page-sub">Your 12-month plan · Dire Straits</div>
+  </div>
+  <div id="year-body"></div>
+</div>
+
 </div>
 
 <!-- CHORD DETAIL MODAL -->
@@ -963,6 +972,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-
   </button>
   <button class="nav-btn" onclick="showPanel('tests',this)">
     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tests
+  </button>
+  <button class="nav-btn" onclick="showPanel('year',this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h2M14 14h2M8 18h2"/></svg>Year
   </button>
 </nav>
 
@@ -1163,6 +1175,7 @@ function showPanel(id,el){
   el.classList.add('active');
   if(id==='home')renderHome();
   if(id==='plan')renderPlan();
+  if(id==='year')renderYear();
   if(id==='game')renderGameBoard();
 }
 function renderHome(){
@@ -3569,8 +3582,155 @@ function updateTestProgress(){
 }
 
 // ── INIT — all data defined above, safe to render ──────────
+
+// ── 12-MONTH SONG PLAN: SULTANS OF SWING ──────────────────
+// Oscar's 8 mastery points. Each monthly test names the points it checks.
+const MASTERY=[
+  {n:1,t:'From memory',d:'No chart or tab in front of you.'},
+  {n:2,t:'Start to finish',d:'The whole song, no stopping.'},
+  {n:3,t:'No mistakes',d:'No wrong notes, no restarts.'},
+  {n:4,t:'At tempo',d:'Full speed (about 148 BPM), even a bit above.'},
+  {n:5,t:'Good time',d:'Locked to the metronome, including triplets.'},
+  {n:6,t:'Clean technique',d:'Right fingering, in-tune bends, clean slides, hammer-ons and pull-offs, no buzz. Sounds like the record.'},
+  {n:7,t:'Under pressure',d:'Plays well when you are uncomfortable: recorded, watched, one take.'},
+  {n:8,t:'Understand it',d:'You can explain the key, chords, scales and why the parts work.'},
+];
+const SULTANS_FACTS=[
+  ['Key','D minor'],
+  ['Tempo','About 148 BPM on the record'],
+  ['Verse chords','Dm – C – B♭ – A'],
+  ['Picking','Thumb and fingers, no pick (Knopfler style)'],
+  ['Solo scales','D minor pentatonic (your Shape 1 moved to fret 10) and the D minor scale'],
+  ['You will need','A good tab (Songsterr is easy to read) and the original recording'],
+];
+const YEAR_PLAN=[
+  {m:1,title:'Read tab and the verse chords',bpm:'60–70',
+   why:'Tab is just a picture of the neck. Six lines are the six strings (top line = high e), and the numbers are frets. Learn it on the chords you will use all year.',
+   goals:['Read a tab line: say the string and fret for 10 notes in a row','Play Dm, C, B♭ (A-shape barre at fret 1) and A cleanly, one at a time','Trainer: Dm ↔ C and B♭ ↔ A, 20 or more changes a minute','Loop Dm – C – B♭ – A with the metronome at 60, four beats each','Find D minor pentatonic Shape 1 at fret 10 (your A minor Shape 1, moved up 5 frets)'],
+   test:{what:'Play the verse chord loop four times through from memory with the metronome at 70, no stops.',checks:[1,2,5]}},
+  {m:2,title:'Thumb and finger picking',bpm:'70',
+   why:'Knopfler plays without a pick. Your thumb plays the bass notes and your index and middle fingers pluck the higher strings. This month is all about getting that feeling natural.',
+   goals:['Thumb alone: steady bass notes on every beat over the four verse chords','Add index and middle: thumb on the beat, fingers pluck the top strings together (a "pinch")','Play the verse chords fingerstyle at 70 BPM for 2 minutes without stopping','Learn the chorus chords from your tab and play them fingerstyle','Say the chord names out loud as you play the whole song structure'],
+   test:{what:'Play the whole song\'s chords (verses and choruses) fingerstyle from memory at 70 BPM.',checks:[1,2,5]}},
+  {m:3,title:'The little fills: hammer-ons and pull-offs',bpm:'70–80',
+   why:'Between the vocal lines Knopfler answers with short licks. They are built from hammer-ons, pull-offs and notes from D minor pentatonic. Learning them one at a time is how the song starts to sound like the record.',
+   goals:['Hammer-on drill: fret, then hammer the next finger without picking again. Both notes the same volume','Pull-off drill: flick the finger off sideways so the lower note rings','Learn the first two verse fills from the tab, one bar at a time','Play verse 1 with its fills at 70 BPM','Name the scale each fill comes from'],
+   test:{what:'Play verse 1 with all its fills from memory at 80 BPM, with no buzzing notes.',checks:[1,3,6,8]}},
+  {m:4,title:'Bends and slides in tune',bpm:'60–80',
+   why:'A bend that is out of tune is what makes playing sound amateur. You check a bend by playing the target note first and then bending up to match it. A tuner helps.',
+   goals:['Whole-step bend check: play fret 12 on the G string, then bend fret 10 up to match it. 10 in a row in tune','Half-step bends the same way','Slides: land exactly on the target fret, no extra noise','Learn the rest of the verse fills','Learn the first 4 bars of the middle solo slowly'],
+   test:{what:'Ten bends in a row that match the target note on a tuner, then verse 2 with fills at 80 BPM.',checks:[3,6]}},
+  {m:5,title:'The middle solo and triplets',bpm:'70–100',
+   why:'Triplets are three even notes in one beat ("trip-a-let"). The final solo is full of them, so you start counting them now with the metronome.',
+   goals:['Metronome triplets: say "trip-a-let" on every beat at 60, then play them on one note','Triplets across two strings at 70 BPM','Learn the whole middle solo, one phrase a week','Play the middle solo at 70% speed (about 100 BPM) from memory','Explain which notes of the solo are the chord notes under it'],
+   test:{what:'Middle solo from memory at 100 BPM, in time with the metronome, with in-tune bends.',checks:[1,5,6,8]}},
+  {m:6,title:'Electric guitar and first full run-through',bpm:'100',
+   why:'This is a good month to move to an electric. The bends and the final solo are much easier on lighter strings. The goal now is getting through the whole song once without stopping, even slowly.',
+   goals:['Move to electric (or lighter strings) and set a clean tone','Re-check your bends on the new guitar, since they feel different','Play intro, verses, choruses and middle solo in order at 100 BPM','Mark the 3 hardest bars and practise only those for 5 minutes a day','Record yourself once and listen back'],
+   test:{what:'Record the whole song (without the final solo) start to finish at 100 BPM. No stopping, whatever happens.',checks:[1,2,7]}},
+  {m:7,title:'Final solo, part 1',bpm:'80–100',
+   why:'The outro solo is the famous part. You learn it in small chunks, slow and perfect, before any speed.',
+   goals:['Split the final solo into 4-bar chunks and number them','Learn the first half chunk by chunk at 80 BPM','Play each chunk 3 times in a row with no mistakes before moving on','Join the chunks together at 80 BPM','Keep running the rest of the song at 100 BPM twice a week'],
+   test:{what:'First half of the final solo from memory at 100 BPM, no mistakes.',checks:[1,3,6]}},
+  {m:8,title:'Final solo, part 2: the fast triplet runs',bpm:'80–110',
+   why:'The fast runs are built from triplet patterns repeated across strings. Practise in short bursts: play one beat fast, stop, then two beats, then four.',
+   goals:['Learn the second half of the final solo chunk by chunk','Burst practice: 1 beat fast, pause, 2 beats, pause, 4 beats','Play the runs at 80, then 90, then 100. Only go up when 3 in a row are clean','Join both halves of the final solo','Explain the shape the runs come from'],
+   test:{what:'The whole final solo from memory at 110 BPM, in time.',checks:[1,2,5,8]}},
+  {m:9,title:'Build the tempo',bpm:'110–135',
+   why:'Now everything goes up a little at a time. Speed comes from clean, relaxed playing. If you miss a note, drop back 10 BPM.',
+   goals:['Whole song at 110, then 120, then 130 BPM. Three clean run-throughs before each step up','Play along with the recording slowed to 80% (YouTube speed setting)','Check your hands stay relaxed, with no squeezing','Fix any bar that still buzzes','Practise the hardest bars 10 BPM above your current tempo'],
+   test:{what:'Whole song start to finish at 135 BPM with no stops and no more than 2 small slips.',checks:[2,3,4,5]}},
+  {m:10,title:'Full tempo, sounds like the record',bpm:'148',
+   why:'At full speed, the aim is to sound like the record: the same feel, dynamics and tone, with notes ringing clean.',
+   goals:['Whole song at 140, then 148 BPM','Play along with the original recording at full speed','Record yourself and compare it with the record, bar by bar','Match the tone: clean, bright, a little compression','Every bend checked against the record'],
+   test:{what:'Play the whole song along with the original recording at full speed, with no mistakes.',checks:[1,2,3,4,6]}},
+  {m:11,title:'Above tempo and under pressure',bpm:'150–160',
+   why:'Practising slightly faster than the record makes the real speed feel easy. Pressure practice makes your playing hold up when it counts.',
+   goals:['Whole song at 155, then 160 BPM','One-take rule: hit record and keep the first take, whatever happens','Play for one person in the room','Play with a distraction (TV on, someone talking)','Play it cold, as the very first thing in a session with no warm-up'],
+   test:{what:'One-take video of the whole song at 150 BPM or faster, recorded cold, with someone watching.',checks:[2,3,4,7]}},
+  {m:12,title:'Performance and the final exam',bpm:'148+',
+   why:'This is where all your work comes together. You perform it and you explain it. After this, other songs in this style become a matter of practice, not years.',
+   goals:['Perform the whole song for family or friends','Explain the key, the verse chords and the solo scales to someone','Play it on a different day and time with the same result','Score yourself on all 8 points below','Pick your next song in the same style'],
+   test:{what:'Final exam: full performance for an audience at full speed, then explain the theory. Score all 8 points at 3/3.',checks:[1,2,3,4,5,6,7,8]}},
+];
+let yearState={start:null,goals:{},tests:{},ratings:{},open:null};
+function loadYear(){try{const s=localStorage.getItem('fretflow_year');if(s)yearState={...yearState,...JSON.parse(s)};}catch(e){}}
+function saveYear(){try{localStorage.setItem('fretflow_year',JSON.stringify(yearState));}catch(e){}}
+function yearCurrentMonth(){
+  if(!yearState.start)return 1;
+  const [y,m,d]=yearState.start.split('-').map(Number);
+  const s=new Date(y,m-1,d), now=new Date();
+  let months=(now.getFullYear()-s.getFullYear())*12+(now.getMonth()-s.getMonth());
+  if(now.getDate()<s.getDate())months--;
+  return Math.min(12,Math.max(1,months+1));
+}
+function startYear(){yearState.start=todayStr();yearState.open=1;saveYear();renderYear();}
+function toggleYearMonth(m){yearState.open=yearState.open===m?null:m;saveYear();renderYear();
+  const el=document.getElementById('ym-'+m); if(el&&yearState.open===m)el.scrollIntoView({block:'start'});}
+function toggleYearGoal(m,i){const k=m+'-'+i;yearState.goals[k]=!yearState.goals[k];saveYear();renderYear();}
+function toggleYearTest(m){yearState.tests[m]=yearState.tests[m]?null:todayStr();saveYear();renderYear();}
+function setYearRating(n,v){yearState.ratings[n]=v;saveYear();renderYear();}
+function renderYear(){
+  const el=document.getElementById('year-body'); if(!el)return;
+  const cur=yearCurrentMonth();
+  const totalGoals=YEAR_PLAN.reduce((a,mo)=>a+mo.goals.length,0);
+  const doneGoals=Object.values(yearState.goals).filter(Boolean).length;
+  const passed=YEAR_PLAN.filter(mo=>yearState.tests[mo.m]).length;
+  const pct=Math.round((doneGoals+passed*2)/(totalGoals+24)*100);
+  const facts=SULTANS_FACTS.map(([k,v])=>`<div style="display:flex;gap:10px;padding:6px 0;border-bottom:0.5px solid var(--border)"><div style="width:96px;flex-shrink:0;font-size:13px;color:var(--text3)">${k}</div><div style="font-size:14px;color:var(--text)">${v}</div></div>`).join('');
+  const startCard=yearState.start
+    ?`<div style="font-size:14px;color:var(--text2)">Started ${yearState.start} · you are in <strong style="color:var(--amber)">month ${cur}</strong></div>`
+    :`<div style="font-size:14px;color:var(--text2);margin-bottom:10px">Tap start on the day you begin. The app then works out which month you are in.</div><button class="amber-btn" onclick="startYear()">Start my 12 months today</button>`;
+  const months=YEAR_PLAN.map(mo=>{
+    const open=yearState.open===mo.m, isCur=yearState.start&&mo.m===cur;
+    const gDone=mo.goals.filter((_,i)=>yearState.goals[mo.m+'-'+i]).length;
+    const passedOn=yearState.tests[mo.m];
+    return `<div class="card" id="ym-${mo.m}" style="margin:0 16px 10px;${isCur?'border-color:var(--amber);':''}">
+      <div onclick="toggleYearMonth(${mo.m})" style="cursor:pointer;display:flex;align-items:center;gap:10px">
+        <div style="width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;${passedOn?'background:var(--green);color:#0e0e0e':isCur?'background:var(--amber);color:#0e0e0e':'background:var(--bg3);color:var(--text2)'}">${passedOn?'✓':mo.m}</div>
+        <div style="flex:1">
+          <div style="font-size:15px;font-weight:600;color:var(--text)">Month ${mo.m}: ${mo.title}</div>
+          <div style="font-size:13px;color:var(--text3)">${gDone}/${mo.goals.length} goals · ${mo.bpm} BPM${passedOn?' · test passed':''}${isCur?' · now':''}</div>
+        </div>
+        <div style="color:var(--text3);font-size:18px">${open?'⌄':'›'}</div>
+      </div>
+      ${open?`<div style="margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)">
+        <div style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:12px">${mo.why}</div>
+        <div class="section-label">Goals this month</div>
+        ${mo.goals.map((g,i)=>{const d=yearState.goals[mo.m+'-'+i];return `<div class="plan-task" onclick="toggleYearGoal(${mo.m},${i})" style="cursor:pointer"><div class="check-circle${d?' done':''}"></div><div class="task-name" style="flex:1">${g}</div></div>`;}).join('')}
+        <div style="margin-top:12px;background:${passedOn?'var(--green-dim)':'var(--amber-dim)'};border:0.5px solid ${passedOn?'var(--green)':'var(--amber)'};border-radius:var(--radius);padding:12px">
+          <div style="font-size:14px;font-weight:700;color:${passedOn?'var(--green)':'var(--amber)'};margin-bottom:4px">Month ${mo.m} test${passedOn?' · passed '+passedOn:''}</div>
+          <div style="font-size:14px;color:var(--text);line-height:1.5;margin-bottom:8px">${mo.test.what}</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">${mo.test.checks.map(n=>`<span class="chord-pill">${n}. ${MASTERY[n-1].t}</span>`).join('')}</div>
+          <button class="ghost-btn" style="width:100%" onclick="toggleYearTest(${mo.m})">${passedOn?'Undo pass':'I passed this test'}</button>
+        </div>
+        <button class="ghost-btn" style="width:100%;margin-top:10px" onclick="quickAsk('I am in month ${mo.m} of my 12-month plan to learn Sultans of Swing by Dire Straits. This month: ${mo.title.replace(/'/g,'')}. Give me a simple week-by-week practice plan for this month, explained simply. I play thumb and fingers, have small hands and am still learning to read tab.')">Ask coach for a weekly plan →</button>
+      </div>`:''}
+    </div>`;}).join('');
+  const ratings=MASTERY.map(p=>{const v=yearState.ratings[p.n]||0;return `<div style="padding:10px 0;border-bottom:0.5px solid var(--border)">
+      <div style="font-size:14px;font-weight:600;color:var(--text)">${p.n}. ${p.t}</div>
+      <div style="font-size:13px;color:var(--text3);margin:2px 0 8px">${p.d}</div>
+      <div style="display:flex;gap:6px">${[0,1,2,3].map(x=>`<button class="fb-btn${v===x?' on':''}" onclick="setYearRating(${p.n},${x})">${['Not yet','Starting','Close','Nailed it'][x]}</button>`).join('')}</div>
+    </div>`;}).join('');
+  const score=MASTERY.reduce((a,p)=>a+(yearState.ratings[p.n]||0),0);
+  el.innerHTML=`
+    <div style="margin:0 16px 12px" class="card">${startCard}
+      <div class="prog-track" style="margin-top:12px"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="prog-pct">${pct}% · ${passed}/12 tests passed</div>
+    </div>
+    <div style="margin:0 16px 12px" class="card"><div class="section-label">The song</div>${facts}</div>
+    <div class="section"><div class="section-label">The 12 months</div></div>
+    ${months}
+    <div style="margin:10px 16px 20px" class="card">
+      <div class="section-label">Your 8-point standard · ${score}/24</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:4px">Score yourself honestly once a month. The goal is "Nailed it" on all 8 by month 12.</div>
+      ${ratings}
+    </div>`;
+}
+
 load();
 loadDaily();
+loadYear();
 renderHome();
 renderSongs();
 renderChordGrids();
