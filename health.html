@@ -1154,6 +1154,7 @@ body::before { display: none; }
     <div style="font-size:20px;font-weight:800;color:var(--orange);letter-spacing:-0.3px">Today's 5</div>
     <div style="font-size:12px;color:var(--muted);margin-top:3px" id="checklistSubtitle">Do these 5 and the day counts.</div>
   </div>
+  <div class="hn-card" id="nightNudge" style="display:none;margin-bottom:12px;border-left:4px solid var(--orange)"></div>
   <div class="hn-card" id="streakCard" style="margin-bottom:12px"></div>
 
   <!-- Checklist - static HTML, JS only toggles state -->
@@ -2004,7 +2005,68 @@ const KEY = 'oscar_balance_v1';
 function load() {
   try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
 }
-function save(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
+function save(data) {
+  try { localStorage.setItem(KEY, JSON.stringify(data)); }
+  catch (e) { toast('Could not save on this phone. Do a backup in Health Notes.'); return false; }
+  mirrorNow();
+  return true;
+}
+
+// ── Safe saving: every change is also copied to IndexedDB ────────
+// Safari writes localStorage to disk a moment later, so closing the app
+// straight after a tick can lose it. IndexedDB commits straight away.
+// On load, if the copy is newer than localStorage, it is put back.
+let _idb = null;
+function idbOpen() {
+  if (_idb) return _idb;
+  _idb = new Promise(function(res, rej) {
+    try {
+      const r = indexedDB.open('oscar_mirror', 1);
+      r.onupgradeneeded = function() { r.result.createObjectStore('kv'); };
+      r.onsuccess = function() { res(r.result); };
+      r.onerror = function() { rej(r.error); };
+    } catch (e) { rej(e); }
+  });
+  _idb.catch(function() { _idb = null; });
+  return _idb;
+}
+function mirrorNow() {
+  const ts = Date.now();
+  const snap = { ts: ts, data: {} };
+  try {
+    localStorage.setItem('oscar_saved_at', String(ts));
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.indexOf('oscar_') === 0) snap.data[k] = localStorage.getItem(k);
+    }
+  } catch (e) {}
+  return idbOpen().then(function(db) {
+    return new Promise(function(res) {
+      const tx = db.transaction('kv', 'readwrite');
+      tx.objectStore('kv').put(snap, 'snap');
+      tx.oncomplete = res; tx.onerror = res; tx.onabort = res;
+    });
+  }).catch(function() {});
+}
+let _mirrorT = null;
+function mirrorSoon() { clearTimeout(_mirrorT); _mirrorT = setTimeout(mirrorNow, 300); }
+function recoverFromMirror() {
+  return idbOpen().then(function(db) {
+    return new Promise(function(res) {
+      const r = db.transaction('kv', 'readonly').objectStore('kv').get('snap');
+      r.onsuccess = function() { res(r.result); };
+      r.onerror = function() { res(null); };
+    });
+  }).then(function(snap) {
+    if (!snap || !snap.data) return false;
+    let lsTs = 0;
+    try { lsTs = parseInt(localStorage.getItem('oscar_saved_at') || '0', 10) || 0; } catch (e) {}
+    if (snap.ts <= lsTs) return false;
+    Object.keys(snap.data).forEach(function(k) { try { localStorage.setItem(k, snap.data[k]); } catch (e) {} });
+    try { localStorage.setItem('oscar_saved_at', String(snap.ts)); } catch (e) {}
+    return true;
+  }).catch(function() { return false; });
+}
 
 function dayKey(d) {
   const dt = d || new Date(Date.now() - 3 * 3600000);
@@ -2070,11 +2132,14 @@ function applyChecklistState() {
 }
 
 function toggleCheck(id) {
+  // Set the tick to the opposite of what is on screen, so a stale screen can never untick a saved item.
+  const row = document.getElementById('cl_' + id);
   const { data, key } = getTodayData();
   if (!data[key].checks) data[key].checks = {};
-  data[key].checks[id] = !data[key].checks[id];
+  data[key].checks[id] = row ? !row.classList.contains('cl-done') : !data[key].checks[id];
   save(data);
   applyChecklistState();
+  renderNightNudge();
   updateStreak();
   renderWeek();
   renderStatus();
@@ -2630,7 +2695,7 @@ function loadFastData() {
   try { return JSON.parse(localStorage.getItem(FAST_KEY)) || { active: null, history: [] }; }
   catch { return { active: null, history: [] }; }
 }
-function saveFastData(d) { localStorage.setItem(FAST_KEY, JSON.stringify(d)); }
+function saveFastData(d) { localStorage.setItem(FAST_KEY, JSON.stringify(d)); mirrorSoon(); }
 
 function renderPreFastChecklist() {
   const fd = loadFastData();
@@ -2859,7 +2924,7 @@ const WCI_KEY = 'oscar_wci_v1';
 function loadWCI() {
   try { return JSON.parse(localStorage.getItem(WCI_KEY)) || {}; } catch { return {}; }
 }
-function saveWCIData(d) { localStorage.setItem(WCI_KEY, JSON.stringify(d)); }
+function saveWCIData(d) { localStorage.setItem(WCI_KEY, JSON.stringify(d)); mirrorSoon(); }
 
 function renderWCIScorecard() {
   const el = document.getElementById('wciScorecard');
@@ -3127,7 +3192,7 @@ const PHOTO_KEY = 'oscar_photos_v1';
 function loadPhotos() {
   try { return JSON.parse(localStorage.getItem(PHOTO_KEY)) || {}; } catch { return {}; }
 }
-function savePhotos(photos) { localStorage.setItem(PHOTO_KEY, JSON.stringify(photos)); }
+function savePhotos(photos) { localStorage.setItem(PHOTO_KEY, JSON.stringify(photos)); mirrorSoon(); }
 
 // Compress image to JPEG dataURL at max 600px wide, quality 0.75
 function compressImage(file, callback) {
@@ -3555,7 +3620,7 @@ const WT_KEY = 'oscar_weight_v1';
 function loadWT() {
   try { return JSON.parse(localStorage.getItem(WT_KEY)) || []; } catch { return []; }
 }
-function saveWTData(arr) { localStorage.setItem(WT_KEY, JSON.stringify(arr)); }
+function saveWTData(arr) { localStorage.setItem(WT_KEY, JSON.stringify(arr)); mirrorSoon(); }
 
 function initWeightTab() {
   const dateEl = document.getElementById('wtDate');
@@ -3739,7 +3804,7 @@ const PF_KEY = 'oscar_peakflow_v1';
 function loadPF() {
   try { return JSON.parse(localStorage.getItem(PF_KEY)) || []; } catch { return []; }
 }
-function savePFData(arr) { localStorage.setItem(PF_KEY, JSON.stringify(arr)); }
+function savePFData(arr) { localStorage.setItem(PF_KEY, JSON.stringify(arr)); mirrorSoon(); }
 
 function initPeakFlow() {
   // Default date to today
@@ -3922,6 +3987,7 @@ function toggleGp(id) {
   const g = loadGp();
   g[id] = !g[id];
   try { localStorage.setItem(GP_KEY, JSON.stringify(g)); } catch (e) {}
+  mirrorSoon();
   applyGp();
 }
 function applyGp() {
@@ -4055,7 +4121,7 @@ function restoreData(input) {
       if (!obj || obj.app !== 'oscar-wellness' || !obj.data) throw new Error('bad');
       if (!confirm('Restore backup from ' + String(obj.saved).slice(0, 10) + '? This replaces what is on this phone.')) return;
       Object.keys(obj.data).forEach(function(k) { localStorage.setItem(k, obj.data[k]); });
-      location.reload();
+      mirrorNow().then(function() { location.reload(); });
     } catch (e) { toast('That file is not a wellness backup'); }
   };
   reader.readAsText(file);
@@ -4310,6 +4376,7 @@ function hygDue() {
 }
 function saveHyg(v) {
   try { if (v) localStorage.setItem(HYG_KEY, v); else localStorage.removeItem(HYG_KEY); } catch (e) {}
+  mirrorSoon();
   renderHyg(); renderStatus();
 }
 function renderHyg() {
@@ -4350,7 +4417,55 @@ function init() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// ── 9pm nudge: after 9pm, list the must-dos not yet ticked ──────
+function renderNightNudge() {
+  const el = document.getElementById('nightNudge');
+  if (!el) return;
+  const h = new Date().getHours();
+  const key = dayKey();
+  const td = load()[key] || {};
+  const checks = td.checks || {};
+  const left = coreIdsFor(key).filter(function(id) { return !checks[id]; }).map(function(id) {
+    const l = document.querySelector('#cl_' + id + ' .cl-label');
+    return l ? l.textContent : id;
+  });
+  if ((h >= 21 || h < 3) && left.length) {
+    el.innerHTML = '<div style="font-weight:800;color:var(--orange)">It\'s after 9. Still to tick:</div>' +
+      '<div style="margin-top:4px">' + left.join(', ') + '</div>' +
+      '<div class="hn-small" style="margin-top:6px">Tick what you did today, do the evening block if you can, and let the rest go.</div>';
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+// Re-read saved ticks whenever the app comes back on screen, so it never shows an old copy.
+function refreshToday() {
+  const hd = document.getElementById('hdrDay');
+  if (hd) hd.textContent = new Date().toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long' });
+  renderChecklist();
+  updateStreak();
+  renderWeek();
+  renderStatus();
+  renderNightNudge();
+}
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') refreshToday(); else mirrorNow();
+});
+window.addEventListener('pageshow', function(e) { if (e.persisted) refreshToday(); });
+window.addEventListener('pagehide', function() { mirrorNow(); });
+window.addEventListener('storage', function(e) { if (e.key === KEY) refreshToday(); });
+
+document.addEventListener('DOMContentLoaded', function() {
+  init();
+  renderNightNudge();
+  setInterval(renderNightNudge, 60000);
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+  recoverFromMirror().then(function(restored) {
+    if (restored) { refreshToday(); loadWeight(); renderLog(); toast('Recovered your latest ticks'); }
+    else mirrorNow();
+  });
+});
 </script>
 </body>
 </html>
