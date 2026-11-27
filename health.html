@@ -185,6 +185,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, 
     <div class="cl-tick"></div>
   </div>
 
+  <!-- Food from Lose It -->
+  <div class="card" id="foodCard">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <div style="font-size:15px;font-weight:800">Food today</div>
+      <div style="font-size:11px;color:var(--muted)">from Lose It</div>
+    </div>
+    <div class="wt-entry">
+      <input type="number" id="foodKcal" inputmode="numeric" placeholder="kcal" min="0" max="6000">
+      <input type="number" id="foodProt" inputmode="numeric" placeholder="protein g" min="0" max="400">
+      <button onclick="saveFood()">Save</button>
+    </div>
+    <div id="foodToday"></div>
+    <div id="foodWeek"></div>
+  </div>
+
   <!-- The one number going up -->
   <div class="card" id="daysCard" style="margin-top:6px"></div>
 
@@ -700,6 +715,65 @@ function renderWeightCard() {
     '</div>' + stepsHtml(w.cur, w.next) + warn;
 }
 
+// ── Food: calories and protein typed in from Lose It ──
+const KCAL_LO = 1500, KCAL_HI = 1800, PROT_TARGET = 110, WEEK_KCAL = 12000;
+function saveFood() {
+  const kEl = document.getElementById('foodKcal'), pEl = document.getElementById('foodProt');
+  const kcal = parseInt(kEl.value, 10), prot = parseInt(pEl.value, 10);
+  const t = getToday();
+  const f = t.data[t.key].food || {};
+  if (!isNaN(kcal)) { if (kcal < 0 || kcal > 6000) { toast('Calories look wrong'); return; } f.kcal = kcal; }
+  if (!isNaN(prot)) { if (prot < 0 || prot > 400) { toast('Protein looks wrong'); return; } f.protein = prot; }
+  if (isNaN(kcal) && isNaN(prot)) { toast('Type in calories or protein'); return; }
+  t.data[t.key].food = f;
+  save(t.data);
+  kEl.value = ''; pEl.value = ''; kEl.blur(); pEl.blur();
+  toast('Food saved');
+  renderFood();
+}
+function renderFood() {
+  const all = load(), key = dayKey();
+  const f = (all[key] && all[key].food) || {};
+  let today = '';
+  if (f.kcal != null || f.protein != null) {
+    let kTxt = '', pTxt = '';
+    if (f.kcal != null) {
+      const inBand = f.kcal >= KCAL_LO && f.kcal <= KCAL_HI;
+      const col = inBand ? 'var(--green)' : 'var(--amber)';
+      const note = inBand ? 'in range' : f.kcal < KCAL_LO ? 'under 1,500' : 'over 1,800';
+      kTxt = '<div class="stat"><b style="color:' + col + '">' + f.kcal.toLocaleString('en-NZ') + '</b><span>kcal \u00B7 ' + note + '</span></div>';
+    }
+    if (f.protein != null) {
+      const ok = f.protein >= PROT_TARGET;
+      pTxt = '<div class="stat"><b style="color:' + (ok ? 'var(--green)' : 'var(--amber)') + '">' + f.protein + ' g</b><span>protein \u00B7 ' + (ok ? 'target hit' : (PROT_TARGET - f.protein) + ' g short of 110') + '</span></div>';
+    }
+    today = '<div class="stat-row" style="grid-template-columns:1fr 1fr">' + kTxt + pTxt + '</div><div class="small" style="margin-top:4px">Saved for today. Type again to change it.</div>';
+  } else {
+    today = '<div class="small">Aim for 1,500 to 1,800 kcal and 110 g protein. Steady days beat big swings.</div>';
+  }
+  document.getElementById('foodToday').innerHTML = today;
+  let total = 0, days = 0, pSum = 0, pDays = 0;
+  const keys = weekKeys().filter(function(k) { return k <= key; });
+  keys.forEach(function(k) {
+    const x = all[k] && all[k].food;
+    if (!x) return;
+    if (x.kcal != null) { total += x.kcal; days++; }
+    if (x.protein != null) { pSum += x.protein; pDays++; }
+  });
+  let week = '';
+  if (days || pDays) {
+    const left = WEEK_KCAL - total;
+    const pct = Math.min(100, total / WEEK_KCAL * 100);
+    const col = left >= 0 ? 'var(--green)' : 'var(--red)';
+    week = '<div style="display:flex;justify-content:space-between;font-size:13px;margin-top:12px"><strong>This week</strong><span style="color:' + col + ';font-weight:700">' +
+      total.toLocaleString('en-NZ') + ' of 12,000 kcal</span></div>' +
+      '<div class="mv-bar" style="margin-top:6px"><div style="width:' + pct + '%;background:' + col + '"></div></div>' +
+      '<div class="small">' + (left >= 0 ? left.toLocaleString('en-NZ') + ' left for the rest of the week' : 'Over by ' + (-left).toLocaleString('en-NZ')) +
+      ' \u00B7 ' + days + ' day' + (days === 1 ? '' : 's') + ' logged' + (pDays ? ' \u00B7 protein average ' + Math.round(pSum / pDays) + ' g' : '') + '</div>';
+  }
+  document.getElementById('foodWeek').innerHTML = week;
+}
+
 // ── Moves this week (Mon to Sun; Sunday is rest) ──
 function weekKeys() {
   const base = appNow();
@@ -812,6 +886,7 @@ function renderToday() {
   renderDays(data, wts);
   renderWeightCard();
   renderMoves();
+  renderFood();
   renderNightNudge(data, wts);
   renderHygBanner();
 }
